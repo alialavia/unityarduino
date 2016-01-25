@@ -1,0 +1,35 @@
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\bin\Release\WpfTest.exe.config
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\bin\Release\WpfTest.exe
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\bin\Release\WpfTest.pdb
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\bin\Release\ClassLibrary1.dll
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\bin\Release\ClassLibrary1.pdb
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Release\WpfTest.csprojResolveAssemblyReference.cache
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Release\MainWindow.g.cs
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Release\App.g.cs
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Release\WpfTest_MarkupCompile.cache
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Release\WpfTest_MarkupCompile.lref
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Release\MainWindow.baml
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Release\WpfTest.g.resources
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Release\WpfTest.Properties.Resources.resources
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Release\WpfTest.csproj.GenerateResource.Cache
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Release\WpfTest.exe
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Release\WpfTest.pdb
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\bin\Release\WpfTest.exe.config
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\obj\Release\WpfTest.exe
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\obj\Release\WpfTest.pdb
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\bin\Release\WpfTest.exe
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\bin\Release\WpfTest.pdb
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\bin\Release\ClassLibrary1.dll
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\bin\Release\ClassLibrary1.pdb
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\obj\Release\WpfTest.csprojResolveAssemblyReference.cache
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\obj\Release\MainWindow.g.cs
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\obj\Release\App.g.cs
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\obj\Release\WpfTest_MarkupCompile.cache
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\obj\Release\WpfTest_MarkupCompile.lref
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\obj\Release\MainWindow.baml
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\obj\Release\WpfTest.g.resources
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\obj\Release\WpfTest.Properties.Resources.resources
+C:\Users\alavis\unityarduino\CSharpProject\WpfTest\obj\Release\WpfTest.csproj.GenerateResource.Cache
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\bin\Release\WpfTest.exe.config
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Release\WpfTest.exe
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Release\WpfTest.pdb

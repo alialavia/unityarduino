@@ -1,0 +1,21 @@
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\ClassLibrary1\bin\Release\ClassLibrary1.dll
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\ClassLibrary1\bin\Release\ClassLibrary1.pdb
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\ClassLibrary1\bin\Release\Newtonsoft.Json.dll
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\ClassLibrary1\bin\Release\Newtonsoft.Json.xml
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\ClassLibrary1\obj\Release\ClassLibrary1.dll
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\ClassLibrary1\obj\Release\ClassLibrary1.pdb
+D:\Users\alavis\Documents\Visual Studio 2015\Projects\ClassLibrary1\ClassLibrary1\obj\Release\ArduinoCommunicator.csprojResolveAssemblyReference.cache
+C:\Users\alavis\unityarduino\CSharpProject\ClassLibrary1\bin\Release\ClassLibrary1.dll
+C:\Users\alavis\unityarduino\CSharpProject\ClassLibrary1\bin\Release\ClassLibrary1.pdb
+C:\Users\alavis\unityarduino\CSharpProject\ClassLibrary1\bin\Release\Newtonsoft.Json.dll
+C:\Users\alavis\unityarduino\CSharpProject\ClassLibrary1\bin\Release\Newtonsoft.Json.xml
+C:\Users\alavis\unityarduino\CSharpProject\ClassLibrary1\obj\Release\ArduinoCommunicator.csprojResolveAssemblyReference.cache
+C:\Users\alavis\unityarduino\CSharpProject\ClassLibrary1\obj\Release\ClassLibrary1.dll
+C:\Users\alavis\unityarduino\CSharpProject\ClassLibrary1\obj\Release\ClassLibrary1.pdb
+C:\Users\alavis\unityarduino\CSharpProject\ArduinoCommunicator\bin\Release\ClassLibrary1.dll
+C:\Users\alavis\unityarduino\CSharpProject\ArduinoCommunicator\bin\Release\ClassLibrary1.pdb
+C:\Users\alavis\unityarduino\CSharpProject\ArduinoCommunicator\bin\Release\Newtonsoft.Json.dll
+C:\Users\alavis\unityarduino\CSharpProject\ArduinoCommunicator\bin\Release\Newtonsoft.Json.xml
+C:\Users\alavis\unityarduino\CSharpProject\ArduinoCommunicator\obj\Release\ArduinoCommunicator.csprojResolveAssemblyReference.cache
+C:\Users\alavis\unityarduino\CSharpProject\ArduinoCommunicator\obj\Release\ClassLibrary1.dll
+C:\Users\alavis\unityarduino\CSharpProject\ArduinoCommunicator\obj\Release\ClassLibrary1.pdb

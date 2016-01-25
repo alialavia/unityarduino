@@ -1,0 +1,16 @@
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\bin\Debug\WpfTest.exe.config
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\bin\Debug\WpfTest.exe
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\bin\Debug\WpfTest.pdb
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\bin\Debug\ClassLibrary1.dll
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\bin\Debug\ClassLibrary1.pdb
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Debug\WpfTest.csprojResolveAssemblyReference.cache
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Debug\MainWindow.g.cs
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Debug\App.g.cs
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Debug\WpfTest_MarkupCompile.cache
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Debug\WpfTest_MarkupCompile.lref
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Debug\MainWindow.baml
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Debug\WpfTest.g.resources
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Debug\WpfTest.Properties.Resources.resources
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Debug\WpfTest.csproj.GenerateResource.Cache
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Debug\WpfTest.exe
+d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Debug\WpfTest.pdb
