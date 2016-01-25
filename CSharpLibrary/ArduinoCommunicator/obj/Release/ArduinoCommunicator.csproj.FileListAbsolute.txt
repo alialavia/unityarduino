@@ -19,3 +19,8 @@ C:\Users\alavis\unityarduino\CSharpProject\ArduinoCommunicator\bin\Release\Newto
 C:\Users\alavis\unityarduino\CSharpProject\ArduinoCommunicator\obj\Release\ArduinoCommunicator.csprojResolveAssemblyReference.cache
 C:\Users\alavis\unityarduino\CSharpProject\ArduinoCommunicator\obj\Release\ClassLibrary1.dll
 C:\Users\alavis\unityarduino\CSharpProject\ArduinoCommunicator\obj\Release\ClassLibrary1.pdb
+C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\obj\Release\ArduinoCommunicator.csprojResolveAssemblyReference.cache
+C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Release\ArduinoCommunicator.dll
+C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Release\ArduinoCommunicator.pdb
+C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\obj\Release\ArduinoCommunicator.dll
+C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\obj\Release\ArduinoCommunicator.pdb

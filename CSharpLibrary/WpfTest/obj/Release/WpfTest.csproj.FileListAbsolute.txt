@@ -33,3 +33,16 @@ C:\Users\alavis\unityarduino\CSharpProject\WpfTest\obj\Release\WpfTest.csproj.Ge
 C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\bin\Release\WpfTest.exe.config
 C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Release\WpfTest.exe
 C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Release\WpfTest.pdb
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\bin\Release\WpfTest.exe
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\bin\Release\WpfTest.pdb
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Release\WpfTest.csprojResolveAssemblyReference.cache
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Release\MainWindow.g.cs
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Release\App.g.cs
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Release\WpfTest_MarkupCompile.cache
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Release\WpfTest_MarkupCompile.lref
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Release\MainWindow.baml
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Release\WpfTest.g.resources
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Release\WpfTest.Properties.Resources.resources
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Release\WpfTest.csproj.GenerateResource.Cache
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\bin\Release\ArduinoCommunicator.dll
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\bin\Release\ArduinoCommunicator.pdb

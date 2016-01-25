@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,25 +22,27 @@ namespace WpfTest
     /// </summary>
     public partial class MainWindow : Window
     {
-        SerialCommunicator sc;
+        //SerialCommunicator sc;
+        Arduino arduino;
         public MainWindow()
         {
             InitializeComponent();
+            var a = SerialPort.GetPortNames();
+            arduino = new Arduino(BoardName.UNO, new MonoSerialPort(new System.IO.Ports.SerialPort("COM2", 115200, Parity.Even, 8, StopBits.Two))); 
             try
             {
-                sc = new SerialCommunicator("COM22", 115200, System.IO.Ports.Parity.Even, 8, System.IO.Ports.StopBits.Two);
-                sc.ArduinoStateReceived += Sc_ArduinoStateReceived;
-                sc.Start();
+                arduino.pinMode(13, PinMode.OUTPUT);
+                arduino.pinMode(12, PinMode.OUTPUT);
 
+                arduino.ArduinoStateReceived += Arduino_ArduinoStateReceived;            
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
 
-        private void Sc_ArduinoStateReceived(object sender, ArduinoUpdateEventArgs e)
+        private void Arduino_ArduinoStateReceived(object sender, ArduinoUpdateEventArgs e)
         {
             var sc = sender as SerialCommunicator;
             Dispatcher.Invoke(() =>
@@ -47,6 +50,20 @@ namespace WpfTest
                 if (e.State.IsValid)
                     textBlock.Text = e.State.ToString();
             });
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            if (arduino.digitalRead(12) == DigitalValue.Low)
+            {
+                arduino.digitalWrite(12, DigitalValue.High);
+                arduino.digitalWrite(13, DigitalValue.High);
+            }
+            else
+            {
+                arduino.digitalWrite(12, DigitalValue.Low);
+                arduino.digitalWrite(13, DigitalValue.Low);
+            }
 
         }
     }

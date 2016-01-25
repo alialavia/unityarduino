@@ -1,14 +1,14 @@
 ﻿using System;
-using ClassLibrary1;
+using ArduinoCommunicator;
 
 namespace ArduinoCommunicator
 {
     public class ArduinoUpdateEventArgs : EventArgs
     {
-        public ArduinoUpdateEventArgs(byte[] stateBuffer, BoardName board = BoardName.UNO)
+        public ArduinoUpdateEventArgs(Arduino state)
         {
-            State = new ArduinoState(stateBuffer, board);
+            State = state;
         }
-        public ArduinoState State { get; private set; }
+        public Arduino State { get; private set; }
     }
 }

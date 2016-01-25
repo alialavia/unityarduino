@@ -1,4 +1,4 @@
-﻿namespace ClassLibrary1
+﻿namespace ArduinoCommunicator
 {
     public enum BoardName
     {
