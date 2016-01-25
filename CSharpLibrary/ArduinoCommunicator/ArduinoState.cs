@@ -19,12 +19,12 @@ namespace ArduinoCommunicator
         /* getters */
         public DigitalValue digitalRead(int pinNumber)
         {
-            return digitalValues[pinNumber];
+            return digitalValuesIn[pinNumber];
         }
 
         public int analogRead(int pinNumber)
         {
-            return analogValues[pinNumber];
+            return analogValuesIn[pinNumber];
         }
 
         public ArduinoState(byte[] buffer, BoardName board = BoardName.UNO)
@@ -46,8 +46,8 @@ namespace ArduinoCommunicator
 
             digitalBytes = (int)Math.Ceiling(NumberOfDigitalPins / 8d);
             analogBufferOffset = digitalBufferOffset + digitalBytes;
-            digitalValues = new DigitalValue[NumberOfDigitalPins];
-            analogValues = new int[NumberOfAnalogPins];
+            digitalValuesIn = new DigitalValue[NumberOfDigitalPins];
+            analogValuesIn = new int[NumberOfAnalogPins];
 
             processBuffer(buffer);
             IsValid = true;
@@ -62,7 +62,7 @@ namespace ArduinoCommunicator
             {
                 int B = i / 8, // Byte # for digital pins
                     b = i % 8;                      // bit number 
-                digitalValues[i] = ((buffer[B + digitalBufferOffset] & (1 << b)) == 0) ? DigitalValue.Low : DigitalValue.High;
+                digitalValuesIn[i] = ((buffer[B + digitalBufferOffset] & (1 << b)) == 0) ? DigitalValue.Low : DigitalValue.High;
             }
 
             for (int i = 0; i < NumberOfAnalogPins; i++)
@@ -70,14 +70,14 @@ namespace ArduinoCommunicator
                 byte B0 = buffer[analogBufferOffset + i * 2];
                 byte B1 = buffer[analogBufferOffset + i * 2 + 1];
 
-                analogValues[i] = B0*256 + B1;
+                analogValuesIn[i] = B0*256 + B1;
             }
 
             /* Behaviours specific to each board which needs to be addressed after buffer is processed */
             switch (Board)
             {
                 case BoardName.UNO:
-                    digitalValues[0] = digitalValues[1] = DigitalValue.Invalid;
+                    digitalValuesIn[0] = digitalValuesIn[1] = DigitalValue.Invalid;
                     break;
 
                 default:
@@ -119,8 +119,8 @@ namespace ArduinoCommunicator
         private int digitalBytes = 2;
         private int analogBufferOffset = 3;
         private byte[] stateBuffer;
-        private DigitalValue[] digitalValues { get; set; }
-        private int[] analogValues { get; set; }
+        private DigitalValue[] digitalValuesIn { get; set; }
+        private int[] analogValuesIn { get; set; }
         #endregion
 
     }
