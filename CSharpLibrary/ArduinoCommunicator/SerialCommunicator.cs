@@ -35,35 +35,31 @@ namespace ArduinoCommunicator
             serialPort.Close();
         }
 
-        public SerialCommunicator(Arduino arduinoState, MonoSerialPort sp)
+        public SerialCommunicator(Arduino arduinoState, MonoSerialPort sp, bool Async)
         {
             serialPort = sp;
             ArduinoState = arduinoState;
             serialPort.ReceivedBytesThreshold = IN_MESSAGE_LENGTH;
+            
 
-            serialPort.DataReceived += Sp_DataReceived;
+            serialPort.Open();
             // Wait for arduino to get ready
             Thread.Sleep(2000);
-            serialPort.Open();
-        }
-        //public SerialCommunicator(Arduino arduinoState)
-        //{
+            if (Async)
+            {
+                serialPort.Async = true;
+                serialPort.DataReceived += Sp_DataReceived;
+                serialPort.Run();
+            }
             
-        //}
-        //public SerialCommunicator(Arduino arduinoState, String portName = "COM1", int baudRate = 115200, Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One)
-        //{
-        //    serialPort = new MonoSerialPort(portName, baudRate, parity, dataBits, stopBits);
-        //}
+        }
 
         public void Start()
         {
-            sendACK();
+            //sendACK();
         }
 
-        private void Sp_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
-        {
-            Debug.WriteLine("ERROR:" + e.ToString());
-        }
+
         private byte BOF = 0xff;
         private byte ACK = 0x01;
         private const int IN_MESSAGE_LENGTH = 16; // bytes
@@ -77,7 +73,32 @@ namespace ArduinoCommunicator
         {
             if (e.EventType == SerialData.Eof)
                 return;
+            Refresh();
+        }
 
+        private object sync = new object();
+        public void Refresh()
+        {
+            // Two refreshes cannot be called simultanously
+            lock (sync)
+            {
+                sendACK();
+                UpdateState();
+                sendCommands();
+            }
+        }
+
+        private void sendCommands()
+        {
+            while (ArduinoState.commandQueue.Count > 0)
+            {
+                byte[] nextCommand = ArduinoState.commandQueue.Dequeue();
+                serialPort.Write(nextCommand, 0, nextCommand.Length);
+            }
+        }
+
+        private void UpdateState()
+        {
             byte[] temp = new byte[IN_MESSAGE_LENGTH];
             //var sp = sender as MonoSerialPort;
             Debug.Assert(serialPort.BytesToRead >= IN_MESSAGE_LENGTH);
@@ -88,19 +109,11 @@ namespace ArduinoCommunicator
                 data[i] = temp[i + 1];
 
             // sanity check
-            if (temp[0] == BOF && Crc8(data, IN_MESSAGE_LENGTH - 2) == temp[IN_MESSAGE_LENGTH-1])
+            if (temp[0] == BOF && Crc8(data, IN_MESSAGE_LENGTH - 2) == temp[IN_MESSAGE_LENGTH - 1])
             {
                 ArduinoState.inBuffer(data);
                 OnArduinoStateReceived(new ArduinoUpdateEventArgs(ArduinoState));
             }
-            sendACK();
-            //sendBOF();
-            while (ArduinoState.commandQueue.Count > 0)
-            {
-                byte[] nextCommand = ArduinoState.commandQueue.Dequeue();
-                serialPort.Write(nextCommand, 0, nextCommand.Length);
-            }
-
         }
 
         private void sendACK()

@@ -33,7 +33,7 @@ namespace WpfTest
             sp.Open();*/
             
             //var a = System.IO.Ports.SerialPort.GetPortNames();
-            arduino = new Arduino(BoardName.UNO, new MonoSerialPort("COM18", 115200, Parity.None, 8, StopBits.One)); 
+            arduino = new Arduino(BoardName.UNO, new MonoSerialPort("COM18", 115200, Parity.None, 8, StopBits.One), false); 
             try
             {
                 arduino.pinMode(13, PinMode.OUTPUT);
@@ -71,19 +71,22 @@ namespace WpfTest
             });
         }
 
+        bool l = false;
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            if (arduino.digitalRead(12) == DigitalValue.Low)
+            
+            if (l)
             {
-                arduino.digitalWrite(12, DigitalValue.High);
+                //arduino.digitalWrite(12, DigitalValue.High);
                 arduino.digitalWrite(13, DigitalValue.High);
             }
             else
             {
-                arduino.digitalWrite(12, DigitalValue.Low);
+                //arduino.digitalWrite(12, DigitalValue.Low);
                 arduino.digitalWrite(13, DigitalValue.Low);
             }
-
+            l = !l;
+            arduino.Refresh();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

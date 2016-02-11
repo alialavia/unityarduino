@@ -22,53 +22,23 @@ namespace ArduinoCommunicator
         private string portName;
         private StopBits stopBits;
         private BackgroundWorker bgWorker = new BackgroundWorker();
-        
+        public bool IsOpen { private set; get; }
         //FileStream serialStream;
         SafeFileHandle serialHandle;
-
+        public bool Async = true;
+        public bool IsRunning { private set; get; }
 
         public MonoSerialPort(string portName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
         {
-            
-            serialHandle = Win32File.CreateFile("\\\\.\\" + portName, (uint)(EFileAccess.FILE_GENERIC_READ | EFileAccess.FILE_GENERIC_WRITE), 0, IntPtr.Zero, (uint)ECreationDisposition.OpenExisting, (uint)EFileAttributes.Normal, IntPtr.Zero);
-            if (serialHandle.IsInvalid)
-                throw new IOException("Cannot open " + portName);
 
             // Do some basic settings
+            this.IsOpen = false;
+            this.IsRunning = false;
             this.portName = portName;
             this.baudRate = baudRate;
             this.parity = parity;
             this.dataBits = dataBits;
-            this.stopBits = stopBits;
-
-            DCB serialParams = new DCB();
-            serialParams.DCBLength = (uint)Marshal.SizeOf(serialParams);
-
-            if (!Win32File.GetCommState(serialHandle, ref serialParams))
-                throw new IOException("GetCommState error!");
-
-            serialParams.BaudRate = (uint)this.baudRate;
-            serialParams.ByteSize = (byte)this.dataBits;
-            serialParams.StopBits = this.stopBits;
-            serialParams.Parity = this.parity;
-            serialParams.DtrControl = DtrControl.Enable;
-            if (!Win32File.SetCommState(serialHandle, ref serialParams))
-                throw new IOException("SetCommState error!");
-
-            COMMTIMEOUTS timeout = new COMMTIMEOUTS();
-            timeout.ReadIntervalTimeout = 50;
-            timeout.ReadTotalTimeoutConstant = 50;
-            timeout.ReadTotalTimeoutMultiplier = 50;
-            timeout.WriteTotalTimeoutConstant = 50;
-            timeout.WriteTotalTimeoutMultiplier = 10;
-
-            if (!Win32File.SetCommTimeouts(serialHandle, ref timeout))
-                throw new IOException("SetCommTimeouts error!");
-
-            //serialStream = new FileStream(serialHandle, FileAccess.ReadWrite);
-            
-            bgWorker.DoWork += new DoWorkEventHandler(BgWorker_DoWork);
-            bgWorker.ProgressChanged += BgWorker_ProgressChanged;
+            this.stopBits = stopBits;            
         }
 
         private void BgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -115,16 +85,72 @@ namespace ArduinoCommunicator
 
         public void Open()
         {
-            //sp.Open();
-            bgWorker.RunWorkerAsync();
+
+            serialHandle = Win32File.CreateFile("\\\\.\\" + this.portName, (uint)(EFileAccess.FILE_GENERIC_READ | EFileAccess.FILE_GENERIC_WRITE), 0, IntPtr.Zero, (uint)ECreationDisposition.OpenExisting, (uint)EFileAttributes.Normal, IntPtr.Zero);
+            if (serialHandle.IsInvalid)
+                throw new IOException("Cannot open " + this.portName);
+
+            DCB serialParams = new DCB();
+            serialParams.DCBLength = (uint)Marshal.SizeOf(serialParams);
+
+            if (!Win32File.GetCommState(serialHandle, ref serialParams))
+                throw new IOException("GetCommState error!");
+
+            serialParams.BaudRate = (uint)this.baudRate;
+            serialParams.ByteSize = (byte)this.dataBits;
+            serialParams.StopBits = this.stopBits;
+            serialParams.Parity = this.parity;
+            serialParams.DtrControl = DtrControl.Enable;
+            if (!Win32File.SetCommState(serialHandle, ref serialParams))
+                throw new IOException("SetCommState error!");
+
+            COMMTIMEOUTS timeout = new COMMTIMEOUTS();
+            timeout.ReadIntervalTimeout = 50;
+            timeout.ReadTotalTimeoutConstant = 50;
+            timeout.ReadTotalTimeoutMultiplier = 50;
+            timeout.WriteTotalTimeoutConstant = 50;
+            timeout.WriteTotalTimeoutMultiplier = 10;
+
+            if (!Win32File.SetCommTimeouts(serialHandle, ref timeout))
+                throw new IOException("SetCommTimeouts error!");
+
+            IsOpen = true;
         }
 
+        public void Run()
+        {
+            if (IsRunning)
+                return;
+            if (!IsOpen)
+                return;
+
+            if (Async)
+            {
+                bgWorker.DoWork += new DoWorkEventHandler(BgWorker_DoWork);
+                bgWorker.ProgressChanged += BgWorker_ProgressChanged;
+                bgWorker.RunWorkerAsync();                
+            }
+            IsRunning = true;
+        }
+        public void Stop()
+        {
+            if (!IsRunning)
+                return;
+            
+            if (bgWorker.IsBusy)
+            {                
+                bgWorker.CancelAsync();
+            }
+            IsRunning = true;
+        }
         public void Write(byte[] buffer, int offset, int count)
         {
             //serialStream.Write(buffer, offset, count);
             uint bytesWrote = 0;
 
-            Win32File.WriteFile(serialHandle, buffer, (uint)count, out bytesWrote, IntPtr.Zero);
+            bool success = Win32File.WriteFile(serialHandle, buffer, (uint)count, out bytesWrote, IntPtr.Zero);
+            if (!success)
+                throw new IOException("Write returned error :" + new Win32Exception((int)Win32File.GetLastError()).Message);
 
         }
 
@@ -136,7 +162,12 @@ namespace ArduinoCommunicator
             if (!success)
                 throw new IOException("Read returned error :" + new Win32Exception((int)Win32File.GetLastError()).Message);
         }
-
+        public byte[] ReadAll()
+        {
+            byte[] buffer = new byte[this.BytesToRead];
+            Read(buffer, 0, BytesToRead);
+            return buffer;
+        }
         public void Dispose()
         {
             if (!serialHandle.IsClosed)

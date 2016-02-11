@@ -46,21 +46,27 @@ namespace ArduinoCommunicator
         public ArduinoBoard Board { get; private set; }
 
         SerialCommunicator sc;
-        public Arduino(BoardName board, MonoSerialPort serialPort /*, String portName = "COM22", int baudRate = 115200, Parity parity = Parity.Even, int dataBits = 8, StopBits stopBits = StopBits.Two*/)
+        public Arduino(BoardName board, MonoSerialPort serialPort, bool Async)
         {
             //stateBuffer = inBuffer;
-            IsValid = false;    
+            IsValid = false;
             Board = new ArduinoBoard(board);
-            sc = new SerialCommunicator(this, serialPort);
-            
+            sc = new SerialCommunicator(this, serialPort, Async);
+
             /* Number of bytes required for the digital pins */
             digitalBytes = (int)Math.Ceiling(Board.NumberOfDigitalPins / 8d);
             digitalValuesIn = new DigitalValue[Board.NumberOfDigitalPins];
             analogValuesIn = new int[Board.NumberOfAnalogPins];
-            sc.Start();
+            //sc.Start();
+            //sc.Refresh();
             sc.ArduinoStateReceived += Sc_ArduinoStateReceived;
             //outBuffer = new byte[digitalBytes + Board.NumberOfDigitalPins];
 
+        }
+
+        public void Refresh()
+        {
+            sc.Refresh();
         }
         public event EventHandler<ArduinoUpdateEventArgs> ArduinoStateReceived;
 
