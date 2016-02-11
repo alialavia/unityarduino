@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Ports;
-
+using System.Threading;
 
 namespace ArduinoCommunicator
 {
@@ -30,6 +30,11 @@ namespace ArduinoCommunicator
         }
         private MonoSerialPort serialPort;
 
+        public void Close()
+        {
+            serialPort.Close();
+        }
+
         public SerialCommunicator(Arduino arduinoState, MonoSerialPort sp)
         {
             serialPort = sp;
@@ -37,7 +42,8 @@ namespace ArduinoCommunicator
             serialPort.ReceivedBytesThreshold = IN_MESSAGE_LENGTH;
 
             serialPort.DataReceived += Sp_DataReceived;
-            //serialPort.ErrorReceived += Sp_ErrorReceived;
+            // Wait for arduino to get ready
+            Thread.Sleep(2000);
             serialPort.Open();
         }
         //public SerialCommunicator(Arduino arduinoState)
@@ -73,9 +79,9 @@ namespace ArduinoCommunicator
                 return;
 
             byte[] temp = new byte[IN_MESSAGE_LENGTH];
-            var sp = sender as MonoSerialPort;
-            Debug.Assert(sp.BytesToRead >= IN_MESSAGE_LENGTH);
-            sp.Read(temp, 0, IN_MESSAGE_LENGTH);
+            //var sp = sender as MonoSerialPort;
+            Debug.Assert(serialPort.BytesToRead >= IN_MESSAGE_LENGTH);
+            serialPort.Read(temp, 0, IN_MESSAGE_LENGTH);
 
             byte[] data = new byte[IN_MESSAGE_LENGTH - 2];
             for (int i = 0; i < data.Length; i++)

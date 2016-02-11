@@ -114,7 +114,11 @@ void setup()
     pinMode(13, OUTPUT);
     digitalWrite(13, 0);
     // baud: 9600, Databits: 8, Parity: Even, Stopbits: 2  
-    Serial.begin(115200, SERIAL_8E2);
+    //Serial.begin(115200, SERIAL_8E2);
+    Serial.begin(115200);
+    /*while (!Serial) {
+    ; // wait for serial port to connect. Needed for Leonardo only
+    }*/
     Timer1.initialize(50000); // usec
     Timer1.attachInterrupt(sendState);
 }

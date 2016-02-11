@@ -52,6 +52,7 @@ namespace ArduinoCommunicator
             IsValid = false;    
             Board = new ArduinoBoard(board);
             sc = new SerialCommunicator(this, serialPort);
+            
             /* Number of bytes required for the digital pins */
             digitalBytes = (int)Math.Ceiling(Board.NumberOfDigitalPins / 8d);
             digitalValuesIn = new DigitalValue[Board.NumberOfDigitalPins];
@@ -102,6 +103,11 @@ namespace ArduinoCommunicator
                     throw new NotImplementedException("The selected board is not implemented yet.");
             }            
             IsValid = true;
+        }
+
+        public void Close()
+        {
+            sc.Close();
         }
 
         #region Equals and GetHashCode overrides

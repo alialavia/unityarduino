@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,8 +27,13 @@ namespace WpfTest
         public MainWindow()
         {
             InitializeComponent();
-            var a = SerialPort.GetPortNames();
-            arduino = new Arduino(BoardName.UNO, new MonoSerialPort(new System.IO.Ports.SerialPort("COM2", 115200, Parity.Even, 8, StopBits.Two))); 
+            /*
+            var sp = new MonoSerialPort("COM18", 9600, Parity.None, 8, StopBits.One );
+            sp.DataReceived += Sp_DataReceived;
+            sp.Open();*/
+            
+            //var a = System.IO.Ports.SerialPort.GetPortNames();
+            arduino = new Arduino(BoardName.UNO, new MonoSerialPort("COM18", 115200, Parity.None, 8, StopBits.One)); 
             try
             {
                 arduino.pinMode(13, PinMode.OUTPUT);
@@ -41,7 +46,21 @@ namespace WpfTest
                 MessageBox.Show(ex.Message);
             }
         }
-
+        /*
+        private void Sp_DataReceived(object sender, MonoSerialDataReceivedEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (e.EventType == System.IO.Ports.SerialData.Chars)
+                {
+                    byte[] buffer = new byte[1];
+                    (sender as MonoSerialPort).Read(buffer, 0, 1);
+                    textBlock.Text += Encoding.UTF8.GetString(buffer);
+                    Thread.Sleep(1);
+                }
+            });
+        }
+        */
         private void Arduino_ArduinoStateReceived(object sender, ArduinoUpdateEventArgs e)
         {
             var sc = sender as SerialCommunicator;
@@ -65,6 +84,11 @@ namespace WpfTest
                 arduino.digitalWrite(13, DigitalValue.Low);
             }
 
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            arduino.Close();
         }
     }
 }
