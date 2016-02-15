@@ -1,0 +1,3 @@
+[submodule "CSharpLibrary/ArduinoCommunicator/SerialPortNet"]
+	path = CSharpLibrary/ArduinoCommunicator/SerialPortNet
+	url = https://github.com/alialavia/SerialPortNet
