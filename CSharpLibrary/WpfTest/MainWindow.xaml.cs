@@ -33,7 +33,7 @@ namespace WpfTest
             }
         }
 
-        private void Arduino_ArduinoStateReceived(object sender, ArduinoUpdateEventArgs e)
+        private void Arduino_ArduinoStateReceived(object sender, ArduinoUpdatesEventArgs e)
         {
             var sc = sender as SerialCommunicator;
             Dispatcher.Invoke(() =>

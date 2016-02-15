@@ -41,7 +41,7 @@ namespace ArduinoCommunicator
             var portnames = new List<String>();
 
             foreach (var devicename in SerialPortNET.EnumerateSerialPorts())
-                if (devicename.Key.Contains("USBSER"))
+                if (devicename.Key.Contains(USBSerialDeviceName))
                     portnames.Add(devicename.Value);
 
             foreach (var portname in portnames)
@@ -67,7 +67,7 @@ namespace ArduinoCommunicator
 
         #region Public Events
 
-        public event EventHandler<ArduinoUpdateEventArgs> ArduinoStateReceived;
+        public event EventHandler<ArduinoUpdatesEventArgs> ArduinoStateReceived;
 
         #endregion Public Events
 
@@ -103,18 +103,13 @@ namespace ArduinoCommunicator
             }
         }
 
-        public void Start()
-        {
-            //sendACK();
-        }
-
         #endregion Public Methods
 
         #region Protected Methods
 
-        protected virtual void OnArduinoStateReceived(ArduinoUpdateEventArgs e)
+        protected virtual void OnArduinoStateReceived(ArduinoUpdatesEventArgs e)
         {
-            EventHandler<ArduinoUpdateEventArgs> temp = ArduinoStateReceived;
+            EventHandler<ArduinoUpdatesEventArgs> temp = ArduinoStateReceived;
             if (temp != null)
             {
                 temp(this, e);
@@ -125,18 +120,14 @@ namespace ArduinoCommunicator
 
         #region Private Fields
 
-        private const int IN_MESSAGE_LENGTH = 16;
+        private const string USBSerialDeviceName = "USBSER";
 
         // bytes
         private readonly object serialLock = new object();
 
-        private byte ACK = 0xfe;
-
         private Arduino ArduinoState;
 
-        private byte BOF = 0xff;
-
-        private Queue<byte> dataFrame = new Queue<byte>(IN_MESSAGE_LENGTH);
+        private Queue<byte> dataFrame = new Queue<byte>(SerialProtocol.IN_MESSAGE_LENGTH);
 
         private SerialPortNET serialPort;
 
@@ -155,10 +146,15 @@ namespace ArduinoCommunicator
 
         #region Private Methods
 
+        /// <summary>
+        /// Connect to a serial port. If no arduino board is found, it would throw and IOException error.
+        /// </summary>
+        /// <param name="sp">SerialPortNET to connect to.</param>
+        /// <exception cref="IOException"></exception>
         private void connect(SerialPortNET sp)
         {
             serialPort = sp;
-            serialPort.ReceivedBytesThreshold = IN_MESSAGE_LENGTH;
+            serialPort.ReceivedBytesThreshold = SerialProtocol.IN_MESSAGE_LENGTH;
             serialPort.Open();
             // Wait for arduino to get ready
             Thread.Sleep(2000);
@@ -167,33 +163,16 @@ namespace ArduinoCommunicator
                 throw new IOException("Cannot find connect to Arduino using the given port and state. Make sure that Arduino is connected, serial port is not in use, and port settings and board name are selected correctly.");
         }
 
-        private byte Crc8(byte[] data, int len)
-        {
-            //const byte *data = vptr;
-            uint crc = 0;
-            int i, j;
-            for (j = 0; j < len; j++)
-            {
-                crc ^= (uint)(data[j] << 8);
-                for (i = 8; i > 0; i--)
-                {
-                    if ((crc & 0x8000) != 0)
-                        crc ^= (0x1070 << 3);
-                    crc <<= 1;
-                }
-            }
-            return (byte)(crc >> 8);
-        }
         //private int OUT_MESSAGE_LENGTH = 18; // bytes
 
         private void sendACK()
         {
-            serialPort.Write(new byte[] { ACK, 0xFF, 0xFF }, 0, 3);
+            serialPort.WriteAll(SerialProtocol.ACK);
         }
 
         private void sendBOF()
         {
-            serialPort.Write(new byte[] { BOF }, 0, 1);
+            serialPort.WriteAll(SerialProtocol.BOF);
         }
 
         private void Sp_DataReceived(object sender, SerialPortNETDataReceivedEventArgs e)
@@ -202,22 +181,19 @@ namespace ArduinoCommunicator
                 return;
             Refresh();
         }
+
         private void UpdateState()
         {
-            byte[] temp = new byte[IN_MESSAGE_LENGTH];
+            byte[] rawData = new byte[SerialProtocol.IN_MESSAGE_LENGTH];
             //var sp = sender as MonoSerialPort;
-            Debug.Assert(serialPort.BytesToRead >= IN_MESSAGE_LENGTH);
-            serialPort.Read(temp, 0, IN_MESSAGE_LENGTH);
-
-            byte[] data = new byte[IN_MESSAGE_LENGTH - 2];
-            for (int i = 0; i < data.Length; i++)
-                data[i] = temp[i + 1];
+            Debug.Assert(serialPort.BytesToRead >= SerialProtocol.IN_MESSAGE_LENGTH);
+            serialPort.Read(rawData, 0, SerialProtocol.IN_MESSAGE_LENGTH);
 
             // sanity check
-            if (temp[0] == BOF && Crc8(data, IN_MESSAGE_LENGTH - 2) == temp[IN_MESSAGE_LENGTH - 1])
+            if (SerialProtocol.IsValidMessage(rawData))
             {
-                ArduinoState.inBuffer(data);
-                OnArduinoStateReceived(new ArduinoUpdateEventArgs(ArduinoState));
+                ArduinoState.inBuffer(SerialProtocol.getData(rawData));
+                OnArduinoStateReceived(new ArduinoUpdatesEventArgs(ArduinoState));
             }
         }
 

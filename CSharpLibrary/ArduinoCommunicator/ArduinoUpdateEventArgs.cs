@@ -3,9 +3,9 @@ using ArduinoCommunicator;
 
 namespace ArduinoCommunicator
 {
-    public class ArduinoUpdateEventArgs : EventArgs
+    public class ArduinoUpdatesEventArgs : EventArgs
     {
-        public ArduinoUpdateEventArgs(Arduino state)
+        public ArduinoUpdatesEventArgs(Arduino state)
         {
             State = state;
         }

@@ -35,7 +35,7 @@ namespace ArduinoCommunicator
 
         #region Public Events
 
-        public event EventHandler<ArduinoUpdateEventArgs> ArduinoStateReceived;
+        public event EventHandler<ArduinoUpdatesEventArgs> ArduinoStateReceived;
 
         #endregion Public Events
 
@@ -193,9 +193,9 @@ namespace ArduinoCommunicator
 
         #region Private Methods
 
-        private void Sc_ArduinoStateReceived(object sender, ArduinoUpdateEventArgs e)
+        private void Sc_ArduinoStateReceived(object sender, ArduinoUpdatesEventArgs e)
         {
-            EventHandler<ArduinoUpdateEventArgs> temp = ArduinoStateReceived;
+            EventHandler<ArduinoUpdatesEventArgs> temp = ArduinoStateReceived;
             if (temp != null)
             {
                 temp(this, e);
