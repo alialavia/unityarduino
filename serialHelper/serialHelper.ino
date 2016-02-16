@@ -1,4 +1,5 @@
-#include <TimerOne.h>
+//#include <TimerOne.h>
+#include <MsTimer2.h>
 
 const int DIGITAL_PINS = 14;
 
@@ -31,6 +32,10 @@ byte Crc8(const byte *data, int len)
 }
 
 int counter = 0;
+
+// We should track 
+boolean isPWMPin[DIGITAL_PINS] = {false};
+
 void sendStates(void)
 {
     counter++;
@@ -39,7 +44,7 @@ void sendStates(void)
     int i = 0;
         
     for (i = 0; i < DIGITAL_PINS; i++)          
-        bitWrite(buffer[i/8], i % 8, (i<2 ? 0 : digitalRead(i)));       
+        bitWrite(buffer[i/8], i % 8, ((i<2 || isPWMPin[i]) ? 0 : digitalRead(i)));       
           
     for (i = 0; i < ANALOG_PINS; i++)
     {
@@ -62,21 +67,30 @@ void readCommands(void)
        byte command = Serial.read();
        byte pin = Serial.read();
        byte value = Serial.read();
-       switch (command) 
+       byte crc = Serial.read();
+       byte buffer[3] = {command, pin, value};
+       if (Crc8(buffer, 3) == crc)
        {
-           case DIGITAL_WRITE:
-             digitalWrite(pin, value);
-             break;
-           case PIN_MODE:
-             pinMode(pin, value);
-             break;
-           case ANALOG_WRITE:
-             analogWrite(pin, value);
-             break;
-           case ACK:                          
-             sendStates();
-             break;
+         switch (command) 
+         {
+             case DIGITAL_WRITE:
+               digitalWrite(pin, value);
+               break;
+             case PIN_MODE:
+               isPWMPin[pin] = false;
+               pinMode(pin, value);
+               break;
+             case ANALOG_WRITE:
+               isPWMPin[pin] = true;
+               analogWrite(pin, value);
+               break;
+             case ACK:                          
+               sendStates();
+               break;
+         }
        }
+       else
+         sendStates();
     } 
 }
 
@@ -90,8 +104,10 @@ void setup()
     /*while (!Serial) {
     ; // wait for serial port to connect. Needed for Leonardo only
     }*/
-    Timer1.initialize(50000); // usec
-    Timer1.attachInterrupt(readCommands);
+    //Timer1.initialize(5000); // usec
+    //Timer1.attachInterrupt(readCommands);
+    MsTimer2::set(50, readCommands);
+    MsTimer2::start();
 }
 
 void loop()
