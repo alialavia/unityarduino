@@ -2,7 +2,17 @@
 {
     public class DigitalValue
     {
-        public static implicit operator bool (DigitalValue dv)
+        #region Private Constructors
+
+        private DigitalValue()
+        {
+        }
+
+        #endregion Private Constructors
+
+        #region Public Methods
+
+        public static implicit operator bool(DigitalValue dv)
         {
             if (dv == DigitalValue.High)
                 return true;
@@ -22,22 +32,40 @@
                 throw new System.Exception("Cannot convert Invalid digital value to boolean!");
         }
 
+        public static implicit operator DigitalValue(bool b)
+        {
+            if (b)
+                return DigitalValue.High;
+            else
+                return DigitalValue.Low;
+        }
+
+        public static implicit operator DigitalValue(int i)
+        {
+            if (i > 0)
+                return DigitalValue.High;
+            else
+                return DigitalValue.Low;
+        }
+
         public override string ToString()
         {
             if (this == DigitalValue.High)
                 return "High";
-            if (this == DigitalValue.Low)
+            else if (this == DigitalValue.Low)
                 return "Low";
-            if (this == DigitalValue.Invalid)
+            else
                 return "Invalid";
-
-            throw new System.Exception("Digital Value out of range.");
         }
 
-        private DigitalValue() { }
-        public static DigitalValue High = new DigitalValue();
-        public static DigitalValue Low = new DigitalValue();
-        public static DigitalValue Invalid = new DigitalValue();
-    }
+        #endregion Public Methods
 
+        #region Public Fields
+
+        public static DigitalValue High = new DigitalValue();
+        public static DigitalValue Invalid = new DigitalValue();
+        public static DigitalValue Low = new DigitalValue();
+
+        #endregion Public Fields
+    }
 }

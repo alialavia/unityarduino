@@ -24,3 +24,5 @@ C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Release\Ardui
 C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Release\ArduinoCommunicator.pdb
 C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\obj\Release\ArduinoCommunicator.dll
 C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\obj\Release\ArduinoCommunicator.pdb
+C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Release\ArduinoCommunicator.dll.CodeAnalysisLog.xml
+C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Release\ArduinoCommunicator.dll.lastcodeanalysissucceeded

@@ -7,6 +7,8 @@ namespace ArduinoCommunicator
     [Serializable]
     internal class SerialCommunicatorUnhandledException : IOException
     {
+        #region Public Constructors
+
         public SerialCommunicatorUnhandledException()
         {
         }
@@ -19,8 +21,14 @@ namespace ArduinoCommunicator
         {
         }
 
+        #endregion Public Constructors
+
+        #region Protected Constructors
+
         protected SerialCommunicatorUnhandledException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
+
+        #endregion Protected Constructors
     }
 }

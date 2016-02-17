@@ -6,7 +6,8 @@ namespace ArduinoCommunicator
 {
     public class ArduinoBoard
     {
-        public ArduinoBoard(BoardName board = BoardName.UNO)
+        public ArduinoBoard() : this(BoardName.UNO) { }
+        public ArduinoBoard(BoardName board)
         {
             BoardName = board;
             switch (board)

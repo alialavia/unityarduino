@@ -15,17 +15,13 @@ namespace WpfTest
         {
             InitializeComponent();
 
-            arduino = new Arduino(BoardName.UNO, false); 
+            arduino = new Arduino(BoardName.UNO, new SerialPortNET("COM18", 115200, Parity.None, 8, StopBits.One));
             try
             {
                 arduino.pinMode(13, PinMode.OUTPUT);
                 arduino.pinMode(12, PinMode.OUTPUT);
 
                 arduino.pinMode(7, PinMode.INPUT_PULLUP);
-                //arduino.pinMode(12, PinMode.OUTPUT);
-                arduino.sendCommands();
-                arduino.getStates();
-                arduino.ArduinoStateReceived += Arduino_ArduinoStateReceived;            
             }
             catch (Exception ex)
             {
@@ -38,7 +34,7 @@ namespace WpfTest
             var sc = sender as SerialCommunicator;
             Dispatcher.Invoke(() =>
             {
-                if (e.State.IsValid)
+                if (e.State.IsConnected)
                     textBlock.Text = e.State.ToString();
             });
         }
@@ -55,8 +51,6 @@ namespace WpfTest
                 arduino.digitalWrite(13, DigitalValue.Low);
             }
             l = !l;
-            arduino.sendCommands();
-            arduino.getStates();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

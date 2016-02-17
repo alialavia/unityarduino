@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Ports;
 using System.Threading;
 
 namespace ArduinoCommunicator
@@ -20,15 +19,9 @@ namespace ArduinoCommunicator
         /// <param name="arduinoState">Variable to store ArduinoStates</param>
         /// <param name="sp"></param>
         /// <param name="Async">If you want to work with Asynchronous (event based) or synchronuse (in an update loop e.g. Unity) mode. </param>
-        public SerialCommunicator(Arduino arduinoState, SerialPortNET sp, bool Async) : this(arduinoState)
+        public SerialCommunicator(SerialPortNET sp)
         {
             connect(sp);
-            if (Async)
-            {
-                serialPort.Async = true;
-                serialPort.DataReceived += Sp_DataReceived;
-                serialPort.Run();
-            }
         }
 
         /// <summary>
@@ -36,7 +29,7 @@ namespace ArduinoCommunicator
         /// </summary>
         /// <param name="arduinoState">Variable to store ArduinoStates</param>
         /// <param name="Async">If you want to work with Asynchronous (event based) or synchronuse (in an update loop e.g. Unity) mode. </param>
-        public SerialCommunicator(Arduino arduinoState, bool Async) : this(arduinoState)
+        public SerialCommunicator()
         {
             var portnames = new List<String>();
 
@@ -51,6 +44,7 @@ namespace ArduinoCommunicator
                 {
                     connect(tempPort);
                     serialPort = tempPort;
+                    break;
                 }
                 catch
                 {
@@ -65,12 +59,6 @@ namespace ArduinoCommunicator
 
         #endregion Public Constructors
 
-        #region Public Events
-
-        public event EventHandler<ArduinoUpdatesEventArgs> ArduinoStateReceived;
-
-        #endregion Public Events
-
         #region Public Methods
 
         public void Close()
@@ -78,71 +66,22 @@ namespace ArduinoCommunicator
             serialPort.Close();
         }
 
-        public void getStates()
+        public void sendCommand(byte[] command)
         {
-            sendACK();
-            UpdateState();
+            serialPort.Write(SerialProtocol.AddCRC(command), 0, command.Length + 1);
         }
 
-        public void Refresh()
+        public int sendRequest(byte[] command)
         {
-            // Two refreshes cannot be called simultanously
-            lock (sync)
-            {
-                getStates();
-                sendCommands();
-            }
-        }
-
-        public void sendCommands()
-        {
-            while (ArduinoState.commandQueue.Count > 0)
-            {
-                byte[] nextCommand = ArduinoState.commandQueue.Dequeue();
-                serialPort.Write(nextCommand, 0, nextCommand.Length);
-            }
+            sendCommand(command);
+            byte[] msg = readMessage();
+            // sanity check
+            if (msg[0] != command[0])
+                throw new SerialCommunicatorUnhandledException("Sent and received commands do not match.");
+            return ((int)msg[1] * 256 + (int)msg[2]);
         }
 
         #endregion Public Methods
-
-        #region Protected Methods
-
-        protected virtual void OnArduinoStateReceived(ArduinoUpdatesEventArgs e)
-        {
-            EventHandler<ArduinoUpdatesEventArgs> temp = ArduinoStateReceived;
-            if (temp != null)
-            {
-                temp(this, e);
-            }
-        }
-
-        #endregion Protected Methods
-
-        #region Private Fields
-
-        private const string USBSerialDeviceName = "USBSER";
-
-        // bytes
-        private readonly object serialLock = new object();
-
-        private Arduino ArduinoState;
-
-        private Queue<byte> dataFrame = new Queue<byte>(SerialProtocol.IN_MESSAGE_LENGTH);
-
-        private SerialPortNET serialPort;
-
-        private object sync = new object();
-
-        #endregion Private Fields
-
-        #region Private Constructors
-
-        private SerialCommunicator(Arduino arduinoState)
-        {
-            ArduinoState = arduinoState;
-        }
-
-        #endregion Private Constructors
 
         #region Private Methods
 
@@ -154,49 +93,52 @@ namespace ArduinoCommunicator
         private void connect(SerialPortNET sp)
         {
             serialPort = sp;
-            serialPort.ReceivedBytesThreshold = SerialProtocol.IN_MESSAGE_LENGTH;
             serialPort.Open();
             // Wait for arduino to get ready
             Thread.Sleep(2000);
-            getStates();
-            if (!ArduinoState.IsValid)
-                throw new IOException("Cannot find connect to Arduino using the given port and state. Make sure that Arduino is connected, serial port is not in use, and port settings and board name are selected correctly.");
-        }
-
-        //private int OUT_MESSAGE_LENGTH = 18; // bytes
-
-        private void sendACK()
-        {
-            serialPort.WriteAll(SerialProtocol.ACK);
-        }
-
-        private void sendBOF()
-        {
-            serialPort.WriteAll(SerialProtocol.BOF);
-        }
-
-        private void Sp_DataReceived(object sender, SerialPortNETDataReceivedEventArgs e)
-        {
-            if (e.EventType == SerialData.Eof)
-                return;
-            Refresh();
-        }
-
-        private void UpdateState()
-        {
-            byte[] rawData = new byte[SerialProtocol.IN_MESSAGE_LENGTH];
-            //var sp = sender as MonoSerialPort;
-            Debug.Assert(serialPort.BytesToRead >= SerialProtocol.IN_MESSAGE_LENGTH);
-            serialPort.Read(rawData, 0, SerialProtocol.IN_MESSAGE_LENGTH);
-
-            // sanity check
-            if (SerialProtocol.IsValidMessage(rawData))
+            // Just to test it's connected to Arduino
+            try
             {
-                ArduinoState.inBuffer(SerialProtocol.getData(rawData));
-                OnArduinoStateReceived(new ArduinoUpdatesEventArgs(ArduinoState));
+                sendRequest(new byte[] { SerialProtocol.ANALOG_READ, (byte)13, (byte)0 });
+            }
+            catch
+            {
+                throw new IOException("Cannot connect to Arduino using the given port. Make sure that Arduino is connected, serial port is not in use, and port settings and board name are selected correctly.");
             }
         }
 
+        private byte[] readMessage()
+        {
+            byte[] rawData = new byte[SerialProtocol.IN_BUFFER_LENGTH];
+            //var sp = sender as MonoSerialPort;
+            Debug.Assert(serialPort.BytesToRead >= SerialProtocol.IN_BUFFER_LENGTH);
+            serialPort.Read(rawData, 0, SerialProtocol.IN_BUFFER_LENGTH);
+
+            // sanity check
+            if (SerialProtocol.IsValidMessage(rawData))
+                return rawData.SkipR(1);
+            else
+                throw new SerialCommunicatorUnhandledException("Bad CRC");
+        }
+
+        private void sendACK()
+        {
+            serialPort.WriteAll(SerialProtocol.AddCRC(SerialProtocol.ACK));
+            //serialPort.WriteAll(SerialProtocol.ACK);
+        }
+
         #endregion Private Methods
+
+        //private int OUT_MESSAGE_LENGTH = 18; // bytes
+
+        #region Private Fields
+
+        private const string USBSerialDeviceName = "USBSER";
+
+        // bytes
+
+        private SerialPortNET serialPort;
+
+        #endregion Private Fields
     }
 }

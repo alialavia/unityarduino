@@ -10,9 +10,17 @@ namespace ArduinoCommunicator
         public static readonly byte[] BOF = new byte[] { 0xFF };
         public static readonly byte[] ACK = new byte[] { 0xFE, 0xFF, 0xFF };
 
-        public static byte CRC(byte[] data, int len)
+        public const byte DIGITAL_WRITE = 0x01;
+        public const byte PIN_MODE = 0x02;
+        public const byte ANALOG_WRITE = 0x03;
+        public const byte ANALOG_READ = 0x04;
+        public const byte DIGITAL_READ = 0x05;
+
+        public const int IN_BUFFER_LENGTH = 0x04;
+
+        public static byte CRC(byte[] data)
         {
-            return Crc8(data, len);
+            return Crc8(data, data.Length);
         }
         private static byte Crc8(byte[] data, int len)
         {
@@ -32,15 +40,17 @@ namespace ArduinoCommunicator
             return (byte)(crc >> 8);
         }
 
+        public static byte[] AddCRC(byte[] data)
+        {
+            var ret = new byte[data.Length + 1];
+            data.CopyTo(ret, 0);
+            ret[ret.Length - 1] = CRC(data);
+            return ret;
+        }
+
         public static bool IsValidMessage(byte[] rawData)
         {
-            return (
-                    rawData[0] == SerialProtocol.BOF[0]
-                    &&
-                    (SerialProtocol.CRC(getData(rawData), SerialProtocol.IN_MESSAGE_LENGTH - 2)
-                    ==
-                    rawData[SerialProtocol.IN_MESSAGE_LENGTH - 1])
-                    );
+            return (SerialProtocol.CRC(rawData.SkipR(1)) == rawData[rawData.Length - 1]);
         }
 
         public static byte[] getData(byte[] rawData)
