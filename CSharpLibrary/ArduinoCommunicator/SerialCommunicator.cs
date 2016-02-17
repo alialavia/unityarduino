@@ -39,11 +39,11 @@ namespace ArduinoCommunicator
 
             foreach (var portname in portnames)
             {
-                var tempPort = new SerialPortNET(portname, 115200, Parity.None, 8, StopBits.One);
+                var tempPort = new SerialPortNET(portname, 115200, Parity.Even, 8, StopBits.Two);
                 try
                 {
                     connect(tempPort);
-                    serialPort = tempPort;
+                    SerialPort = tempPort;
                     break;
                 }
                 catch
@@ -53,7 +53,7 @@ namespace ArduinoCommunicator
                 }
             }
 
-            if (serialPort == null)
+            if (SerialPort == null)
                 throw new IOException("No arduino board found.");
         }
 
@@ -63,21 +63,34 @@ namespace ArduinoCommunicator
 
         public void Close()
         {
-            serialPort.Close();
+            SerialPort.Close();
         }
 
         public void sendCommand(byte[] command)
         {
-            serialPort.Write(SerialProtocol.AddCRC(command), 0, command.Length + 1);
+            SerialPort.Write(SerialProtocol.AddCRC(command), 0, command.Length + 1);
         }
 
         public int sendRequest(byte[] command)
         {
-            sendCommand(command);
-            byte[] msg = readMessage();
-            // sanity check
-            if (msg[0] != command[0])
-                throw new SerialCommunicatorUnhandledException("Sent and received commands do not match.");
+            byte[] msg = { 0x00, 0x00, 0x00 };
+            // tries sendin request maximum of TRIALS if it fails
+            int i = 0;
+            for (; i < TRIALS; i++)
+            {
+                sendCommand(command);
+                msg = readMessage();
+                // sanity check
+                if (msg[0] == command[0])
+                {
+                    break;
+                }
+                else
+                    continue;   // A NACK or a corrupted NACK is received
+            }
+            var ret = ((int)msg[1] * 256 + (int)msg[2]);
+            if (ret > 1023 || ret < 0)
+                Debugger.Break();
             return ((int)msg[1] * 256 + (int)msg[2]);
         }
 
@@ -92,8 +105,8 @@ namespace ArduinoCommunicator
         /// <exception cref="IOException"></exception>
         private void connect(SerialPortNET sp)
         {
-            serialPort = sp;
-            serialPort.Open();
+            SerialPort = sp;
+            SerialPort.Open();
             // Wait for arduino to get ready
             Thread.Sleep(2000);
             // Just to test it's connected to Arduino
@@ -111,8 +124,7 @@ namespace ArduinoCommunicator
         {
             byte[] rawData = new byte[SerialProtocol.IN_BUFFER_LENGTH];
             //var sp = sender as MonoSerialPort;
-            Debug.Assert(serialPort.BytesToRead >= SerialProtocol.IN_BUFFER_LENGTH);
-            serialPort.Read(rawData, 0, SerialProtocol.IN_BUFFER_LENGTH);
+            SerialPort.Read(rawData, 0, SerialProtocol.IN_BUFFER_LENGTH);
 
             // sanity check
             if (SerialProtocol.IsValidMessage(rawData))
@@ -123,7 +135,7 @@ namespace ArduinoCommunicator
 
         private void sendACK()
         {
-            serialPort.WriteAll(SerialProtocol.AddCRC(SerialProtocol.ACK));
+            SerialPort.WriteAll(SerialProtocol.AddCRC(SerialProtocol.ACK));
             //serialPort.WriteAll(SerialProtocol.ACK);
         }
 
@@ -131,14 +143,19 @@ namespace ArduinoCommunicator
 
         //private int OUT_MESSAGE_LENGTH = 18; // bytes
 
+        #region Public Properties
+
+        public SerialPortNET SerialPort { get; private set; }
+
+        #endregion Public Properties
+
         #region Private Fields
 
+        private const int TRIALS = 5;
         private const string USBSerialDeviceName = "USBSER";
 
-        // bytes
-
-        private SerialPortNET serialPort;
-
         #endregion Private Fields
+
+        // bytes
     }
 }

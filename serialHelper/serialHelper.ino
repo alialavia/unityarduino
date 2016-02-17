@@ -68,7 +68,7 @@ void sendMsg(byte command, byte data0, byte data1)
 }
 void readCommands(void)
 {    
-    while (Serial.available() > 0)
+    while (Serial.available() >= 4)
     {
        byte command = Serial.read();
        byte pin = Serial.read();
@@ -97,26 +97,25 @@ void readCommands(void)
                  sendMsg(DIGITAL_READ, 0, digitalRead(pin));
                  break;
              case ACK:                          
-               sendStates();
+               sendMsg(ACK, 0xFF, 0xFF);
                break;
          }
        }
        else
-         sendMsg(NACK, crc, Crc8(buffer, 3));
+         sendMsg(command, pin, value);
     } 
 }
 
 void setup()
 {
-    pinMode(13, OUTPUT);
-    digitalWrite(13, 0);
+
     // baud: 9600, Databits: 8, Parity: Even, Stopbits: 2  
     //Serial.begin(115200, SERIAL_8E2);
-    Serial.begin(115200);
+    Serial.begin(115200, SERIAL_8E2);
     /*while (!Serial) {
     ; // wait for serial port to connect. Needed for Leonardo only
     }*/
-    Timer1.initialize(50000); // usec
+    Timer1.initialize(10000); // usec
     Timer1.attachInterrupt(readCommands);
 }
 

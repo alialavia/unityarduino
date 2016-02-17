@@ -12,24 +12,28 @@
 
         #region Public Methods
 
-        public static implicit operator bool(DigitalValue dv)
+        /// <summary>
+        /// Returns true if digitalValue is High and false if it's Low or Invalid
+        /// </summary>
+        /// <param name="digitalValue"></param>
+        public static implicit operator bool(DigitalValue digitalValue)
         {
-            if (dv == DigitalValue.High)
+            if (digitalValue == DigitalValue.High)
                 return true;
-            else if (dv == DigitalValue.Low)
-                return false;
             else
-                throw new System.Exception("Cannot convert Invalid digital value to boolean!");
+                return false;
         }
 
-        public static implicit operator byte(DigitalValue dv)
+        /// <summary>
+        /// Returns true if digitalValue is 1 and 0 if it's Low or Invalid
+        /// </summary>
+        /// <param name="digitalValue"></param>
+        public static implicit operator byte(DigitalValue digitalValue)
         {
-            if (dv == DigitalValue.High)
+            if (digitalValue == DigitalValue.High)
                 return 1;
-            else if (dv == DigitalValue.Low)
-                return 0;
             else
-                throw new System.Exception("Cannot convert Invalid digital value to boolean!");
+                return 0;
         }
 
         public static implicit operator DigitalValue(bool b)

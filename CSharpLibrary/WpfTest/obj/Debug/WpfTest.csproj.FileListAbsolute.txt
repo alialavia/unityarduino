@@ -14,3 +14,19 @@ d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\
 d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Debug\WpfTest.csproj.GenerateResource.Cache
 d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Debug\WpfTest.exe
 d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\WpfTest\obj\Debug\WpfTest.pdb
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\bin\Debug\WpfTest.exe.config
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Debug\WpfTest.exe
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Debug\WpfTest.pdb
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\bin\Debug\WpfTest.exe
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\bin\Debug\WpfTest.pdb
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\bin\Debug\ArduinoCommunicator.dll
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\bin\Debug\ArduinoCommunicator.pdb
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Debug\WpfTest.csprojResolveAssemblyReference.cache
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Debug\MainWindow.g.cs
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Debug\App.g.cs
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Debug\WpfTest_MarkupCompile.cache
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Debug\WpfTest_MarkupCompile.lref
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Debug\MainWindow.baml
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Debug\WpfTest.g.resources
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Debug\WpfTest.Properties.Resources.resources
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Debug\WpfTest.csproj.GenerateResource.Cache
