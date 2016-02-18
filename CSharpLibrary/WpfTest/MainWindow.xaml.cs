@@ -24,9 +24,11 @@ namespace WpfTest
             arduino = new Arduino(BoardName.UNO);
             try
             {
-                arduino.pinMode(13, PinMode.OUTPUT);
+                /*arduino.pinMode(13, PinMode.OUTPUT);
                 arduino.pinMode(12, PinMode.OUTPUT);
-                arduino.pinMode(7, PinMode.INPUT_PULLUP);
+                arduino.pinMode(7, PinMode.INPUT_PULLUP);*/
+                //arduino.pinMode(12, PinMode.OUTPUT);
+
             }
             catch (Exception ex)
             {
@@ -41,20 +43,22 @@ namespace WpfTest
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                textBlock.Text = (100.0 * (float)error / (float)success).ToString();
+                textBlock.Text = v.ToString();// (100.0 * (float)error / (float)success).ToString();
             }));
         }
 
         int success = 1;
         int error = 0;
+        int v = 0;
         private void T_Elapsed(object sender, ElapsedEventArgs e)
         {
             //Dispatcher.Invoke(new Action(() => {
             //  textBlock.Text = 
             try
             {
-                arduino.analogWrite(6, (byte)(arduino.analogReadEx(0)/4));
-                
+                v = arduino.analogReadEx(0);
+                arduino.analogWrite(6, (byte)(v / 4));
+
                 success++;
             }
             catch (Exception ex)

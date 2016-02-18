@@ -66,32 +66,41 @@ namespace ArduinoCommunicator
             SerialPort.Close();
         }
 
-        public void sendCommand(byte[] command)
+        public void sendCommand(byte command, byte pin, byte value)
         {
-            SerialPort.Write(SerialProtocol.AddCRC(command), 0, command.Length + 1);
+            byte msb = (byte)((pin << 3) | (value % 0x80));
+            byte lsb = (byte)(value % 0x80);
+            sendMessage(new byte[] { command, msb, lsb });
         }
 
-        public int sendRequest(byte[] command)
+        public void sendMessage(byte[] message)
         {
-            byte[] msg = { 0x00, 0x00, 0x00 };
+            SerialPort.Write(SerialProtocol.AddCRC(message), 0, message.Length + 1);
+        }
+
+        public int sendRequest(byte[] message)
+        {
+            byte[] response = { 0x00, 0x00, 0x00 };
             // tries sendin request maximum of TRIALS if it fails
             int i = 0;
             for (; i < TRIALS; i++)
             {
-                sendCommand(command);
-                msg = readMessage();
+                sendMessage(message);
+                response = readMessage();
                 // sanity check
-                if (msg[0] == command[0])
+                if (response[0] == message[0])
                 {
                     break;
                 }
                 else
                     continue;   // A NACK or a corrupted NACK is received
             }
-            var ret = ((int)msg[1] * 256 + (int)msg[2]);
+            var ret = ((int)response[1] * 128 + (int)response[2]);
+
+            Debug.WriteLine(String.Format("{0} {1} {2}", response[0], response[1], response[2]));
             if (ret > 1023 || ret < 0)
                 Debugger.Break();
-            return ((int)msg[1] * 256 + (int)msg[2]);
+            return (ret);
         }
 
         #endregion Public Methods
@@ -112,7 +121,7 @@ namespace ArduinoCommunicator
             // Just to test it's connected to Arduino
             try
             {
-                sendRequest(new byte[] { SerialProtocol.ANALOG_READ, (byte)13, (byte)0 });
+                sendRequest(new byte[] { SerialProtocol.ANALOG_READ, (byte)0, (byte)0 });
             }
             catch
             {

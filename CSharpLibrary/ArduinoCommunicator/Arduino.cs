@@ -58,39 +58,39 @@ namespace ArduinoCommunicator
 
         public int analogReadEx(int pinNumber)
         {
-            var ret = sc.sendRequest(new byte[] { SerialProtocol.ANALOG_READ, (byte)pinNumber, (byte)0 });
+            var ret = sc.sendRequest(new byte[] { SerialProtocol.ANALOG_READ, (byte)(pinNumber << 3), (byte)0 });
             if (ret > 1023 || ret < 0)
                 throw new ArgumentOutOfRangeException(pinNumber.ToString(), ret.ToString());
             return ret;
         }
-
+        
         public void analogWrite(int pinNumber, byte value)
         {
-            sc.sendCommand(new byte[] { SerialProtocol.ANALOG_WRITE, (byte)pinNumber, value });
+            sc.sendCommand(SerialProtocol.ANALOG_WRITE, (byte)pinNumber, value);
         }
+
+
+        public DigitalValue digitalRead(int pinNumber)
+        {            
+            return (DigitalValue)sc.sendRequest(new byte[] { SerialProtocol.DIGITAL_READ, (byte)(pinNumber << 3), (byte)0 });
+        }
+
+        public void digitalWrite(int pinNumber, DigitalValue value)
+        {
+            sc.sendCommand(SerialProtocol.DIGITAL_WRITE, (byte)pinNumber, value);
+        }
+
+        public void pinMode(int pinNumber, PinMode pinMode)
+        {
+            sc.sendCommand(SerialProtocol.PIN_MODE, (byte)pinNumber, (byte)(pinMode));
+        }
+
+        #endregion Public Methods
 
         public void Close()
         {
             sc.Close();
         }
-
-        public DigitalValue digitalRead(int pinNumber)
-        {
-            return (DigitalValue)sc.sendRequest(new byte[] { SerialProtocol.DIGITAL_READ, (byte)pinNumber, (byte)0 });
-        }
-
-        public void digitalWrite(int pinNumber, DigitalValue value)
-        {
-            sc.sendCommand(new byte[] { SerialProtocol.DIGITAL_WRITE, (byte)pinNumber, value });
-        }
-
-        public void pinMode(int pinNumber, PinMode pinMode)
-        {
-            sc.sendCommand(new byte[] { SerialProtocol.PIN_MODE, (byte)pinNumber, (byte)(pinMode) });
-        }
-
-        #endregion Public Methods
-
         #region Private Methods
 
         private void Connect(SerialPortNET serialPort)

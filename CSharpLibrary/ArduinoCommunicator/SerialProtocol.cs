@@ -18,16 +18,9 @@ namespace ArduinoCommunicator
 
         public static byte CRC(byte[] data)
         {
-            return Crc8(data, data.Length);
+            return (byte) (Crc8(data, data.Length) & 0x7F);
         }
 
-        public static byte[] getData(byte[] rawData)
-        {
-            byte[] data = new byte[SerialProtocol.IN_MESSAGE_LENGTH - 2];
-            for (int i = 0; i < data.Length; i++)
-                data[i] = rawData[i + 1];
-            return data;
-        }
 
         public static bool IsValidMessage(byte[] rawData)
         {
@@ -60,13 +53,14 @@ namespace ArduinoCommunicator
 
         #region Public Fields
 
-        public const byte ANALOG_READ = 0x04;
-        public const byte ANALOG_WRITE = 0x03;
-        public const byte DIGITAL_READ = 0x05;
-        public const byte DIGITAL_WRITE = 0x01;
+        public const byte PIN_MODE = 0xF0;
+        public const byte DIGITAL_WRITE = 0xF1;
+        public const byte ANALOG_WRITE = 0xF2;
+        public const byte DIGITAL_READ = 0xF3;
+        public const byte ANALOG_READ = 0xF4;
+
         public const int IN_BUFFER_LENGTH = 0x04;
-        public const int IN_MESSAGE_LENGTH = 16;
-        public const byte PIN_MODE = 0x02;
+
         public static readonly byte[] ACK = new byte[] { 0xFE, 0xFF, 0xFF };
         public static readonly byte[] BOF = new byte[] { 0xFF };
         public static readonly byte[] NACK = new byte[] { 0xFD, 0xFF, 0xFF };
