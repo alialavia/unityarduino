@@ -17,15 +17,17 @@ namespace WpfTest
         {
             InitializeComponent();
 
-            Timer t = new Timer(10);
+            Timer t = new Timer(50);
             t.Elapsed += T_Elapsed;
             Timer t2 = new Timer(200);
             t2.Elapsed += T2_Elapsed;
             arduino = new Arduino(BoardName.UNO);
+            arduino = new Arduino(BoardName.UNO);
+
             try
             {
-                /*arduino.pinMode(13, PinMode.OUTPUT);
-                arduino.pinMode(12, PinMode.OUTPUT);
+                arduino.pinMode(13, PinMode.OUTPUT);
+                /*arduino.pinMode(12, PinMode.OUTPUT);
                 arduino.pinMode(7, PinMode.INPUT_PULLUP);*/
                 //arduino.pinMode(12, PinMode.OUTPUT);
 
@@ -50,21 +52,24 @@ namespace WpfTest
         int success = 1;
         int error = 0;
         int v = 0;
+        object l = new object();
         private void T_Elapsed(object sender, ElapsedEventArgs e)
         {
-            //Dispatcher.Invoke(new Action(() => {
-            //  textBlock.Text = 
-            try
-            {
-                v = arduino.analogReadEx(0);
-                arduino.analogWrite(6, (byte)(v / 4));
+            lock (l) {
+                //Dispatcher.Invoke(new Action(() => {
+                //  textBlock.Text = 
+                try
+                {
+                    v = arduino.analogReadEx(0);
+                    arduino.analogWrite(5, (byte)(v / 4));
 
-                success++;
-            }
-            catch (Exception ex)
-            {
-                error++;
-                var sp = arduino.SerialPort;
+                    success++;
+                }
+                catch (Exception ex)
+                {
+                    error++;
+                    var sp = arduino.SerialPort;
+                }
             }
             //}));
         }
@@ -79,6 +84,8 @@ namespace WpfTest
             var v = arduino.analogRead(0);
             arduino.digitalWrite(13, !arduino.digitalRead(13));
             */
+            arduino.digitalWrite(13, !arduino.digitalRead(13));
+
 
         }
 

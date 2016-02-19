@@ -12,7 +12,7 @@ namespace ArduinoCommunicator
     public class SerialCommunicator
     {
         #region Public Constructors
-
+        private static List<String> connectedPortNames = new List<string>();
         /// <summary>
         /// Manually select Arduino port settings. Use it for multiple bords, or if you have changed Arduino connection settings.
         /// </summary>
@@ -37,6 +37,9 @@ namespace ArduinoCommunicator
                 if (devicename.Key.Contains(USBSerialDeviceName))
                     portnames.Add(devicename.Value);
 
+            foreach (var portname in connectedPortNames)
+                portnames.Remove(portname);
+
             foreach (var portname in portnames)
             {
                 var tempPort = new SerialPortNET(portname, 115200, Parity.Even, 8, StopBits.Two);
@@ -55,6 +58,8 @@ namespace ArduinoCommunicator
 
             if (SerialPort == null)
                 throw new IOException("No arduino board found.");
+
+            connectedPortNames.Add(SerialPort.portName);
         }
 
         #endregion Public Constructors
@@ -66,41 +71,27 @@ namespace ArduinoCommunicator
             SerialPort.Close();
         }
 
-        public void sendCommand(byte command, byte pin, byte value)
+        public int readCommand(SerialProtocol.Commands command, byte pin, byte value = 0)
         {
-            byte msb = (byte)((pin << 3) | (value % 0x80));
-            byte lsb = (byte)(value % 0x80);
-            sendMessage(new byte[] { command, msb, lsb });
+            byte[] result = sendRequest(createCommand(command, pin, value));
+            int val = result[2];
+            if (command == SerialProtocol.Commands.ANALOG_READ)
+                val = result[1] * 128 + result[2];
+
+            if (val > 1023)
+                Debugger.Break();
+            return val;
+        }
+
+        private void sendCommand(SerialProtocol.Commands command, byte pin, byte value)
+        {
+            sendMessage(createCommand(command, pin, value));
         }
 
         public void sendMessage(byte[] message)
         {
-            SerialPort.Write(SerialProtocol.AddCRC(message), 0, message.Length + 1);
-        }
-
-        public int sendRequest(byte[] message)
-        {
-            byte[] response = { 0x00, 0x00, 0x00 };
-            // tries sendin request maximum of TRIALS if it fails
-            int i = 0;
-            for (; i < TRIALS; i++)
-            {
-                sendMessage(message);
-                response = readMessage();
-                // sanity check
-                if (response[0] == message[0])
-                {
-                    break;
-                }
-                else
-                    continue;   // A NACK or a corrupted NACK is received
-            }
-            var ret = ((int)response[1] * 128 + (int)response[2]);
-
-            Debug.WriteLine(String.Format("{0} {1} {2}", response[0], response[1], response[2]));
-            if (ret > 1023 || ret < 0)
-                Debugger.Break();
-            return (ret);
+            //Debug.Print(message[0])
+            SerialPort.WriteAll(SerialProtocol.AddCRC(message));
         }
 
         #endregion Public Methods
@@ -121,12 +112,21 @@ namespace ArduinoCommunicator
             // Just to test it's connected to Arduino
             try
             {
-                sendRequest(new byte[] { SerialProtocol.ANALOG_READ, (byte)0, (byte)0 });
+                readCommand(SerialProtocol.Commands.DIGITAL_READ, 13);
+                //sendRequest(new byte[] { SerialProtocol.DIGITAL_READ, (byte)13, (byte)0 });
             }
             catch
             {
                 throw new IOException("Cannot connect to Arduino using the given port. Make sure that Arduino is connected, serial port is not in use, and port settings and board name are selected correctly.");
             }
+        }
+
+        private byte[] createCommand(SerialProtocol.Commands command, byte pin, byte value)
+        {
+            byte msb = (byte)((pin << 3) | (value >> 7));
+            byte lsb = (byte)(value % 0x80);
+
+            return new byte[] { (byte)command, msb, lsb };
         }
 
         private byte[] readMessage()
@@ -148,9 +148,46 @@ namespace ArduinoCommunicator
             //serialPort.WriteAll(SerialProtocol.ACK);
         }
 
-        #endregion Private Methods
+        private byte[] sendRequest(byte[] message)
+        {
+            byte[] response = { 0x00, 0x00, 0x00 };
+            // tries sendin request maximum of TRIALS if it fails
+            int i = 0;
+            // send and receive should happen synchronously
+            lock (syncLock)
+            {
+                for (; i < TRIALS; i++)
+                {
+                    sendMessage(message);
+                    waitForResponse();
+                    response = readMessage();
+#if DEBUG
+                    if (response[0] == (byte)SerialProtocol.Commands.ANALOG_WRITE)
+                        Debug.WriteLine(String.Format("{0}, {1}, {2}", response[0], response[1], response[2]));
+#endif
+                    // sanity check
+                    if (response[0] == message[0])
+                    {
+                        break;
+                    }
+                    else
+                        continue;   // A NACK or a corrupted NACK is received
+                }
+            }
+            return response;
+        }
 
-        //private int OUT_MESSAGE_LENGTH = 18; // bytes
+        private void waitForResponse()
+        {
+            var t = DateTime.Now;
+            while (SerialPort.BytesToRead < 4)
+            {
+                if (DateTime.Now.Ticks - t.Ticks > serialTimeout)
+                    throw new SerialCommunicatorUnhandledException("SerialCommunicator timeout reached.");
+            }
+        }
+
+        #endregion Private Methods
 
         #region Public Properties
 
@@ -160,10 +197,17 @@ namespace ArduinoCommunicator
 
         #region Private Fields
 
+        private const long serialTimeout = 1000000;
+
+        //private int OUT_MESSAGE_LENGTH = 18; // bytes
         private const int TRIALS = 5;
+
         private const string USBSerialDeviceName = "USBSER";
+        private object syncLock = new object();
 
         #endregion Private Fields
+
+        // ticks, or 0.1 of uSec
 
         // bytes
     }

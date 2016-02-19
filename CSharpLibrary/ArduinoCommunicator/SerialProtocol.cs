@@ -18,7 +18,7 @@ namespace ArduinoCommunicator
 
         public static byte CRC(byte[] data)
         {
-            return (byte) (Crc8(data, data.Length) & 0x7F);
+            return (byte)(Crc8(data, data.Length) & 0x7F);
         }
 
 
@@ -53,12 +53,14 @@ namespace ArduinoCommunicator
 
         #region Public Fields
 
-        public const byte PIN_MODE = 0xF0;
-        public const byte DIGITAL_WRITE = 0xF1;
-        public const byte ANALOG_WRITE = 0xF2;
-        public const byte DIGITAL_READ = 0xF3;
-        public const byte ANALOG_READ = 0xF4;
-
+        public enum Commands : byte
+        {
+            PIN_MODE = 0xF0,
+            DIGITAL_WRITE = 0xF1,
+            ANALOG_WRITE = 0xF2,
+            DIGITAL_READ = 0xF3,
+            ANALOG_READ = 0xF4
+        }
         public const int IN_BUFFER_LENGTH = 0x04;
 
         public static readonly byte[] ACK = new byte[] { 0xFE, 0xFF, 0xFF };

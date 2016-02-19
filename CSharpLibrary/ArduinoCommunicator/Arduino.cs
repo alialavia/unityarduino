@@ -58,7 +58,7 @@ namespace ArduinoCommunicator
 
         public int analogReadEx(int pinNumber)
         {
-            var ret = sc.sendRequest(new byte[] { SerialProtocol.ANALOG_READ, (byte)(pinNumber << 3), (byte)0 });
+            var ret = sc.readCommand(SerialProtocol.Commands.ANALOG_READ, (byte)pinNumber);
             if (ret > 1023 || ret < 0)
                 throw new ArgumentOutOfRangeException(pinNumber.ToString(), ret.ToString());
             return ret;
@@ -66,23 +66,23 @@ namespace ArduinoCommunicator
         
         public void analogWrite(int pinNumber, byte value)
         {
-            sc.sendCommand(SerialProtocol.ANALOG_WRITE, (byte)pinNumber, value);
+            sc.readCommand(SerialProtocol.Commands.ANALOG_WRITE, (byte)pinNumber, value);
         }
 
 
         public DigitalValue digitalRead(int pinNumber)
         {            
-            return (DigitalValue)sc.sendRequest(new byte[] { SerialProtocol.DIGITAL_READ, (byte)(pinNumber << 3), (byte)0 });
+            return (DigitalValue)sc.readCommand(SerialProtocol.Commands.DIGITAL_READ, (byte)pinNumber);
         }
 
         public void digitalWrite(int pinNumber, DigitalValue value)
         {
-            sc.sendCommand(SerialProtocol.DIGITAL_WRITE, (byte)pinNumber, value);
+            sc.readCommand(SerialProtocol.Commands.DIGITAL_WRITE, (byte)pinNumber, value);
         }
 
         public void pinMode(int pinNumber, PinMode pinMode)
         {
-            sc.sendCommand(SerialProtocol.PIN_MODE, (byte)pinNumber, (byte)(pinMode));
+            sc.readCommand(SerialProtocol.Commands.PIN_MODE, (byte)pinNumber, (byte)(pinMode));
         }
 
         #endregion Public Methods
