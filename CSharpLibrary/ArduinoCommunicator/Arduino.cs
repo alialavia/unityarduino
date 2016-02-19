@@ -29,7 +29,10 @@ namespace ArduinoCommunicator
             }
             catch
             {
-                throw new IOException("Cannot connect to arduino on port" + serialPort.portName);
+                if (serialPort == null)
+                    throw new IOException("Cannot find an Arduino connected to this computer.");
+                else
+                    throw new IOException("Cannot connect to Arduino on port " + serialPort.portName);
             }
             IsConnected = true;
         }

@@ -12,6 +12,7 @@ namespace ArduinoCommunicator
     public class SerialCommunicator
     {
         #region Public Constructors
+        // To support multiple connected Arduinos
         private static List<String> connectedPortNames = new List<string>();
         /// <summary>
         /// Manually select Arduino port settings. Use it for multiple bords, or if you have changed Arduino connection settings.
@@ -22,6 +23,8 @@ namespace ArduinoCommunicator
         public SerialCommunicator(SerialPortNET sp)
         {
             connect(sp);
+            SerialPort = sp;
+            connectedPortNames.Add(SerialPort.portName);
         }
 
         /// <summary>

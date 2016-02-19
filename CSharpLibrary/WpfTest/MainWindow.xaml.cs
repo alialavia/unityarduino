@@ -21,12 +21,12 @@ namespace WpfTest
             t.Elapsed += T_Elapsed;
             Timer t2 = new Timer(200);
             t2.Elapsed += T2_Elapsed;
-            arduino = new Arduino(BoardName.UNO);
-            arduino = new Arduino(BoardName.UNO);
+            arduino1 = new Arduino(BoardName.UNO);
+            arduino2 = new Arduino(BoardName.UNO);
 
             try
             {
-                arduino.pinMode(13, PinMode.OUTPUT);
+                arduino2.pinMode(13, PinMode.OUTPUT);
                 /*arduino.pinMode(12, PinMode.OUTPUT);
                 arduino.pinMode(7, PinMode.INPUT_PULLUP);*/
                 //arduino.pinMode(12, PinMode.OUTPUT);
@@ -60,15 +60,15 @@ namespace WpfTest
                 //  textBlock.Text = 
                 try
                 {
-                    v = arduino.analogReadEx(0);
-                    arduino.analogWrite(5, (byte)(v / 4));
-
+                    v = arduino1.analogReadEx(0);
+                    arduino1.analogWrite(5, (byte)(v / 4));
+                    arduino2.digitalWrite(13, !arduino2.digitalRead(13));
                     success++;
                 }
                 catch (Exception ex)
                 {
                     error++;
-                    var sp = arduino.SerialPort;
+                    var sp = arduino1.SerialPort;
                 }
             }
             //}));
@@ -84,14 +84,14 @@ namespace WpfTest
             var v = arduino.analogRead(0);
             arduino.digitalWrite(13, !arduino.digitalRead(13));
             */
-            arduino.digitalWrite(13, !arduino.digitalRead(13));
+            arduino1.digitalWrite(13, !arduino1.digitalRead(13));
 
 
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            arduino.Close();
+            arduino1.Close();
         }
 
         #endregion Private Methods
@@ -99,7 +99,7 @@ namespace WpfTest
         #region Private Fields
 
         //SerialCommunicator sc;
-        private Arduino arduino;
+        private Arduino arduino1, arduino2;
 
         #endregion Private Fields
     }
