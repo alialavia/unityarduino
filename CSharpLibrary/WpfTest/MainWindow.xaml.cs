@@ -22,11 +22,11 @@ namespace WpfTest
             Timer t2 = new Timer(200);
             t2.Elapsed += T2_Elapsed;
             arduino1 = new Arduino(BoardName.UNO);
-            arduino2 = new Arduino(BoardName.UNO);
+            //arduino2 = new Arduino(BoardName.UNO);
 
             try
             {
-                arduino2.pinMode(13, PinMode.OUTPUT);
+                //arduino2.pinMode(13, PinMode.OUTPUT);
                 /*arduino.pinMode(12, PinMode.OUTPUT);
                 arduino.pinMode(7, PinMode.INPUT_PULLUP);*/
                 //arduino.pinMode(12, PinMode.OUTPUT);
