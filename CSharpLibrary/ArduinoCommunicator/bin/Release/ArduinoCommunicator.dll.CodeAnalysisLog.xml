@@ -12,7 +12,7 @@
          <Members>
           <Member Name="#.cctor()" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="InitializeValueTypeStaticFieldsInline" Category="Microsoft.Usage" CheckId="CA2207" Status="Active" Created="2016-02-19 10:45:41Z" FixCategory="NonBreaking">
+            <Message TypeName="InitializeValueTypeStaticFieldsInline" Category="Microsoft.Usage" CheckId="CA2207" Status="Active" Created="2016-02-22 17:15:10Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="CriticalError" Path="C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\SerialPortNet" File="Win32File.cs" Line="570">Initialize all static fields in 'DCB' when those fields are declared and remove the explicit static constructor.</Issue>
             </Message>
            </Messages>
@@ -23,21 +23,21 @@
          <Members>
           <Member Name="#CreateFile(System.String,System.UInt32,System.UInt32,System.IntPtr,System.UInt32,System.UInt32,System.IntPtr)" Kind="Method" Static="True" Accessibility="Assembly" ExternallyVisible="False">
            <Messages>
-            <Message Id="0" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Status="Active" Created="2016-02-19 10:45:41Z" FixCategory="NonBreaking">
+            <Message Id="0" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Status="Active" Created="2016-02-22 17:15:10Z" FixCategory="NonBreaking">
              <Issue Name="Parameter" Certainty="75" Level="Error">To reduce security risk, marshal parameter 'lpFileName' as Unicode, by setting DllImport.CharSet to CharSet.Unicode, or by explicitly marshaling the parameter as UnmanagedType.LPWStr. If you need to marshal this string as ANSI or system-dependent, set BestFitMapping=false; for added security, also set ThrowOnUnmappableChar=true.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#ReadFile(Microsoft.Win32.SafeHandles.SafeFileHandle,System.Byte[],System.UInt32,System.UInt32&amp;,System.IntPtr)" Kind="Method" Static="True" Accessibility="Assembly" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="DeclarePInvokesCorrectly" Category="Microsoft.Interoperability" CheckId="CA1415" Status="Active" Created="2016-02-19 10:45:41Z" FixCategory="NonBreaking">
+            <Message TypeName="DeclarePInvokesCorrectly" Category="Microsoft.Interoperability" CheckId="CA1415" Status="Active" Created="2016-02-22 17:15:10Z" FixCategory="NonBreaking">
              <Issue Name="NativeOverlapped" Certainty="95" Level="CriticalError">Change the declaration of 'NativeMethods.ReadFile(SafeFileHandle, byte[], uint, out uint, IntPtr)' so that parameter 'lpOverlapped' is a pointer to System.Threading.NativeOverlapped.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#WriteFile(Microsoft.Win32.SafeHandles.SafeFileHandle,System.Byte[],System.UInt32,System.UInt32&amp;,System.IntPtr)" Kind="Method" Static="True" Accessibility="Assembly" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="DeclarePInvokesCorrectly" Category="Microsoft.Interoperability" CheckId="CA1415" Status="Active" Created="2016-02-19 10:45:41Z" FixCategory="NonBreaking">
+            <Message TypeName="DeclarePInvokesCorrectly" Category="Microsoft.Interoperability" CheckId="CA1415" Status="Active" Created="2016-02-22 17:15:10Z" FixCategory="NonBreaking">
              <Issue Name="NativeOverlapped" Certainty="95" Level="CriticalError">Change the declaration of 'NativeMethods.WriteFile(SafeFileHandle, byte[], uint, out uint, IntPtr)' so that parameter 'lpOverlapped' is a pointer to System.Threading.NativeOverlapped.</Issue>
             </Message>
            </Messages>
@@ -48,17 +48,17 @@
          <Members>
           <Member Name="#Dispose(System.Boolean)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message Id="bgWorker" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Status="Active" Created="2016-02-19 10:45:41Z" FixCategory="NonBreaking">
+            <Message Id="bgWorker" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Status="Active" Created="2016-02-22 17:15:10Z" FixCategory="NonBreaking">
              <Issue Certainty="75" Level="Warning" Path="C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\SerialPortNet" File="SerialPortNET.cs" Line="168">'SerialPortNET' contains field 'SerialPortNET.bgWorker' that is of IDisposable type: 'BackgroundWorker'. Change the Dispose method on 'SerialPortNET' to call Dispose or Close on this field.</Issue>
             </Message>
-            <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Active" Created="2016-02-19 10:45:41Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Active" Created="2016-02-22 17:15:10Z" FixCategory="NonBreaking">
              <Issue Certainty="33" Level="CriticalError" Path="C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\SerialPortNet" File="SerialPortNET.cs" Line="168">'SerialPortNET.Dispose(bool)' calls into 'SafeHandle.Dispose()' which has a LinkDemand. By making this call, 'SafeHandle.Dispose()' is indirectly exposed to user code. Review the following call stack that might expose a way to circumvent security protection: &#xD;&#xA;   -&gt;'SerialPortNET.Dispose(bool)'&#xD;&#xA;   -&gt;'SerialPortNET.Dispose(bool)'</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#Open()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Active" Created="2016-02-19 10:45:41Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Active" Created="2016-02-22 17:15:10Z" FixCategory="NonBreaking">
              <Issue Certainty="33" Level="CriticalError" Path="C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\SerialPortNet" File="SerialPortNET.cs" Line="62">'SerialPortNET.Open()' calls into 'Marshal.SizeOf(object)' which has a LinkDemand. By making this call, 'Marshal.SizeOf(object)' is indirectly exposed to user code. Review the following call stack that might expose a way to circumvent security protection: &#xD;&#xA;   -&gt;'SerialPortNET.Open()'&#xD;&#xA;   -&gt;'SerialPortNET.Open()'</Issue>
              <Issue Certainty="33" Level="CriticalError" Path="C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\SerialPortNet" File="SerialPortNET.cs" Line="62">'SerialPortNET.Open()' calls into 'SafeHandle.IsInvalid.get()' which has a LinkDemand. By making this call, 'SafeHandle.IsInvalid.get()' is indirectly exposed to user code. Review the following call stack that might expose a way to circumvent security protection: &#xD;&#xA;   -&gt;'SerialPortNET.Open()'&#xD;&#xA;   -&gt;'SerialPortNET.Open()'</Issue>
             </Message>
