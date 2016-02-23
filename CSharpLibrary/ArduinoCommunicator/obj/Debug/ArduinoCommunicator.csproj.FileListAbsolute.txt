@@ -7,6 +7,7 @@ d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\ClassLibrary
 d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\ClassLibrary1\obj\Debug\ClassLibrary1.pdb
 C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Debug\ArduinoCommunicator.dll
 C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Debug\ArduinoCommunicator.pdb
-C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\obj\Debug\ArduinoCommunicator.csprojResolveAssemblyReference.cache
 C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\obj\Debug\ArduinoCommunicator.dll
 C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\obj\Debug\ArduinoCommunicator.pdb
+C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Debug\ArduinoCommunicator.XML
+C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\obj\Debug\ArduinoCommunicator.csprojResolveAssemblyReference.cache

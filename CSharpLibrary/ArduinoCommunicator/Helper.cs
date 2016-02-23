@@ -33,7 +33,10 @@ namespace ArduinoCommunicator
 // To make extension methods available
 namespace System.Runtime.CompilerServices
 {
+    /// <summary>
+    /// Used to enable extension methods for .Net 2.0 
+    /// </summary>
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class
-         | AttributeTargets.Method)]
+         | AttributeTargets.Method)]        
     public sealed class ExtensionAttribute : Attribute { }
 }

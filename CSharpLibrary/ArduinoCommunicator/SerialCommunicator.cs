@@ -3,40 +3,36 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
-
+using SerialPortNET;
 namespace ArduinoCommunicator
 {
     /// <summary>
     /// Communicates with Arduino.
     /// </summary>
-    public class SerialCommunicator
+    internal class SerialCommunicator
     {
         #region Public Constructors
         // To support multiple connected Arduinos
         private static List<String> connectedPortNames = new List<string>();
         /// <summary>
-        /// Manually select Arduino port settings. Use it for multiple bords, or if you have changed Arduino connection settings.
+        /// Manually select Arduino port settings. Use it for multiple boards, or if you have changed Arduino connection settings.
         /// </summary>
-        /// <param name="arduinoState">Variable to store ArduinoStates</param>
-        /// <param name="sp"></param>
-        /// <param name="Async">If you want to work with Asynchronous (event based) or synchronuse (in an update loop e.g. Unity) mode. </param>
-        public SerialCommunicator(SerialPortNET sp)
+        /// <param name="sp">Serial port to connect to</param>
+        public SerialCommunicator(SerialPort sp)
         {
             connect(sp);
             SerialPort = sp;
-            connectedPortNames.Add(SerialPort.portName);
+            connectedPortNames.Add(SerialPort.PortName);
         }
 
         /// <summary>
         /// Automatically finds Arduino Board and connect to it
         /// </summary>
-        /// <param name="arduinoState">Variable to store ArduinoStates</param>
-        /// <param name="Async">If you want to work with Asynchronous (event based) or synchronuse (in an update loop e.g. Unity) mode. </param>
         public SerialCommunicator()
         {
             var portnames = new List<String>();
 
-            foreach (var devicename in SerialPortNET.EnumerateSerialPorts())
+            foreach (var devicename in SerialPort.EnumerateSerialPorts())
                 if (devicename.Key.Contains(USBSerialDeviceName))
                     portnames.Add(devicename.Value);
 
@@ -45,7 +41,7 @@ namespace ArduinoCommunicator
 
             foreach (var portname in portnames)
             {
-                var tempPort = new SerialPortNET(portname, 115200, Parity.Even, 8, StopBits.Two);
+                var tempPort = new SerialPort(portname, 115200, Parity.Even, 8, StopBits.Two);
                 try
                 {
                     connect(tempPort);
@@ -62,7 +58,7 @@ namespace ArduinoCommunicator
             if (SerialPort == null)
                 throw new IOException("No arduino board found.");
 
-            connectedPortNames.Add(SerialPort.portName);
+            connectedPortNames.Add(SerialPort.PortName);
         }
 
         #endregion Public Constructors
@@ -106,7 +102,7 @@ namespace ArduinoCommunicator
         /// </summary>
         /// <param name="sp">SerialPortNET to connect to.</param>
         /// <exception cref="IOException"></exception>
-        private void connect(SerialPortNET sp)
+        private void connect(SerialPort sp)
         {
             SerialPort = sp;
             SerialPort.Open();
@@ -135,7 +131,6 @@ namespace ArduinoCommunicator
         private byte[] readMessage()
         {
             byte[] rawData = new byte[SerialProtocol.IN_BUFFER_LENGTH];
-            //var sp = sender as MonoSerialPort;
             SerialPort.Read(rawData, 0, SerialProtocol.IN_BUFFER_LENGTH);
 
             // sanity check
@@ -154,7 +149,7 @@ namespace ArduinoCommunicator
         private byte[] sendRequest(byte[] message)
         {
             byte[] response = { 0x00, 0x00, 0x00 };
-            // tries sendin request maximum of TRIALS if it fails
+            // tries sending the request maximum of TRIALS if it fails
             int i = 0;
             // send and receive should happen synchronously
             lock (syncLock)
@@ -194,7 +189,7 @@ namespace ArduinoCommunicator
 
         #region Public Properties
 
-        public SerialPortNET SerialPort { get; private set; }
+        public SerialPort SerialPort { get; private set; }
 
         #endregion Public Properties
 

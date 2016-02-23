@@ -1,7 +1,13 @@
 ﻿namespace ArduinoCommunicator
 {
-    public enum BoardName
+    /// <summary>
+    /// Board type (UNO, DUE, ...)
+    /// </summary>
+    public enum BoardType
     {
+        /// <summary>
+        /// Arduino UNO board
+        /// </summary>
         UNO
     }
 }

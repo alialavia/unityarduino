@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ArduinoCommunicator
 {
-    public static class SerialProtocol
+    internal static class SerialProtocol
     {
         #region Public Methods
 
@@ -33,7 +33,6 @@ namespace ArduinoCommunicator
 
         private static byte Crc8(byte[] data, int len)
         {
-            //const byte *data = vptr;
             uint crc = 0;
             int i, j;
             for (j = 0; j < len; j++)
