@@ -48,4 +48,4 @@ public class NewBehaviourScript : MonoBehaviour {
 
 ```
 
-That's it! Play around with it, and read the full documentation [here](https://cdn.rawgit.com/alialavia/unityarduino/master/Help/index.html).
+That's it! Play around with it, and read the full documentation [here](https://cdn.rawgit.com/alialavia/unityarduino/master/CSharpLibrary/ArduinoCommunicator/Help/index.html).
