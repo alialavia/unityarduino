@@ -154,6 +154,7 @@
   <HelpKINode Title="SerialPort.Run method" Url="html/05b1549d-52d6-2e85-d86e-9fd6c6ac2034.htm" />
   <HelpKINode Title="SerialPort.SerialPort constructor" Url="html/bbf18dad-481a-6e9d-a3f8-e283ade646d9.htm" />
   <HelpKINode Title="SerialPort.Stop method" Url="html/9b7b1b69-3795-af50-f905-0dd005961a07.htm" />
+  <HelpKINode Title="SerialPort.StopBits property" Url="html/1b39d0cb-5c91-74bf-1740-a1e7aa18bb94.htm" />
   <HelpKINode Title="SerialPort.Write method" Url="html/1695adea-80a9-861c-9519-11290bbd24f2.htm" />
   <HelpKINode Title="SerialPort.WriteAll method" Url="html/3829629a-9287-edfe-5362-64465c7b169b.htm" />
   <HelpKINode Title="SerialPortNET namespace" Url="html/ce30ad11-a2b0-1d46-beba-b252990b83d8.htm" />
@@ -167,6 +168,7 @@
   <HelpKINode Title="Space enumeration member" Url="html/39537e59-2c48-464f-e3ec-05899a2bc179.htm" />
   <HelpKINode Title="Stop method" Url="html/9b7b1b69-3795-af50-f905-0dd005961a07.htm" />
   <HelpKINode Title="StopBits enumeration" Url="html/74432bb0-c44b-8a90-31b1-b1b6cb981f31.htm" />
+  <HelpKINode Title="StopBits property" Url="html/1b39d0cb-5c91-74bf-1740-a1e7aa18bb94.htm" />
   <HelpKINode Title="Toggle enumeration member" Url="html/1fb71913-d9b9-29a6-e41a-de7ae5c436a9.htm" />
   <HelpKINode Title="ToString method" Url="html/dd400470-8740-14ce-a1b8-c125c7c66cb0.htm" />
   <HelpKINode Title="Two enumeration member" Url="html/74432bb0-c44b-8a90-31b1-b1b6cb981f31.htm" />

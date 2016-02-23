@@ -20,8 +20,8 @@
     <DocumentationSources>
       <DocumentationSource sourceFile="bin\Release\ArduinoCommunicator.dll" />
 <DocumentationSource sourceFile="bin\Release\ArduinoCommunicator.xml" />
-<DocumentationSource sourceFile="..\SerialPortNet\bin\Release\SerialPortNET.dll" />
-<DocumentationSource sourceFile="..\SerialPortNet\bin\Release\SerialPortNET.xml" /></DocumentationSources>
+<DocumentationSource sourceFile="..\SerialPortNET\bin\Release\SerialPortNET.dll" />
+<DocumentationSource sourceFile="..\SerialPortNET\bin\Release\SerialPortNET.xml" /></DocumentationSources>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
     <HelpFileFormat>Website</HelpFileFormat>
     <IndentHtml>False</IndentHtml>

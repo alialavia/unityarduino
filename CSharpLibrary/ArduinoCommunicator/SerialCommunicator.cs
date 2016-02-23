@@ -105,9 +105,8 @@ namespace ArduinoCommunicator
         #region Private Methods
 
         /// <summary>
-        /// Connect to a serial port. If no arduino board is found, it would throw and IOException error.
+        /// Connect to the Serial Port. If no arduino board is found, it would throw and IOException error.
         /// </summary>
-        /// <param name="sp">SerialPortNET to connect to.</param>
         /// <exception cref="IOException"></exception>
         private void connect()
         {
