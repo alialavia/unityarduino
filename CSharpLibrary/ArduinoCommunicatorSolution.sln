@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfTest", "WpfTest\WpfTest.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoCommunicator", "ArduinoCommunicator\ArduinoCommunicator.csproj", "{DCA7E73F-6C15-42B9-95BB-8026AE75B008}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPortNET", "ArduinoCommunicator\SerialPortNet\SerialPortNET.csproj", "{DE7ED318-FDF5-4E93-85B6-552751C72EA5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPortNET", "SerialPortNet\SerialPortNET.csproj", "{DE7ED318-FDF5-4E93-85B6-552751C72EA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

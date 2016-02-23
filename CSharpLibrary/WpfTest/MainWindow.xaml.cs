@@ -58,18 +58,18 @@ namespace WpfTest
             lock (l) {
                 //Dispatcher.Invoke(new Action(() => {
                 //  textBlock.Text = 
-                try
-                {
+                //try
+                //{
                     v = arduino1.analogRead(0);
                     arduino1.analogWrite(5, (byte)(v / 4));
                     arduino2.digitalWrite(13, !arduino2.digitalRead(13));
                     success++;
-                }
-                catch (Exception)
+                //}
+                /*catch (IOException)
                 {
                     error++;
                     var sp = arduino1.SerialPort;
-                }
+                }*/
             }
             //}));
         }

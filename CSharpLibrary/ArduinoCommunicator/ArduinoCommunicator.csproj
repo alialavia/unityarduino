@@ -53,7 +53,7 @@
     <Compile Include="SerialProtocol.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="SerialPortNet\SerialPortNET.csproj">
+    <ProjectReference Include="..\SerialPortNet\SerialPortNET.csproj">
       <Project>{de7ed318-fdf5-4e93-85b6-552751c72ea5}</Project>
       <Name>SerialPortNET</Name>
     </ProjectReference>

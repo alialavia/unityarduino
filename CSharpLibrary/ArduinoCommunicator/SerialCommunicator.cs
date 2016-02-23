@@ -20,9 +20,17 @@ namespace ArduinoCommunicator
         /// <param name="sp">Serial port to connect to</param>
         public SerialCommunicator(SerialPort sp)
         {
-            connect(sp);
             SerialPort = sp;
-            connectedPortNames.Add(SerialPort.PortName);
+            try
+            {
+                connect();
+                connectedPortNames.Add(SerialPort.PortName);
+
+            }
+            catch (Exception ex)
+            {
+                SerialPort = null;
+            }
         }
 
         /// <summary>
@@ -41,17 +49,16 @@ namespace ArduinoCommunicator
 
             foreach (var portname in portnames)
             {
-                var tempPort = new SerialPort(portname, 115200, Parity.Even, 8, StopBits.Two);
+                SerialPort = new SerialPort(portname, 115200, Parity.Even, 8, StopBits.Two);
                 try
                 {
-                    connect(tempPort);
-                    SerialPort = tempPort;
+                    connect();
                     break;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    tempPort.Stop();
-                    tempPort.Close();
+                    SerialPort.Close();
+                    SerialPort = null;
                 }
             }
 
@@ -102,10 +109,9 @@ namespace ArduinoCommunicator
         /// </summary>
         /// <param name="sp">SerialPortNET to connect to.</param>
         /// <exception cref="IOException"></exception>
-        private void connect(SerialPort sp)
+        private void connect()
         {
-            SerialPort = sp;
-            SerialPort.Open();
+            SerialPort.Open();                                 
             // Wait for arduino to get ready
             Thread.Sleep(2000);
             // Just to test it's connected to Arduino
@@ -114,7 +120,7 @@ namespace ArduinoCommunicator
                 readCommand(SerialProtocol.Commands.DIGITAL_READ, 13);
                 //sendRequest(new byte[] { SerialProtocol.DIGITAL_READ, (byte)13, (byte)0 });
             }
-            catch
+            catch (Exception ex)
             {
                 throw new IOException("Cannot connect to Arduino using the given port. Make sure that Arduino is connected, serial port is not in use, and port settings and board name are selected correctly.");
             }

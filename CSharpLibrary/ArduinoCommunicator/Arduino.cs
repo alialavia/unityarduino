@@ -33,13 +33,15 @@ namespace ArduinoCommunicator
                 else
                     sc = new SerialCommunicator(this.SerialPort);
             }
-            catch
+            catch (IOException ex)
             {
                 if (serialPort == null)
                     throw new IOException("Cannot find an Arduino connected to this computer.");
                 else
                     throw new IOException("Cannot connect to Arduino on port " + serialPort.PortName);
+                
             }
+            
             IsConnected = true;
         }
 
