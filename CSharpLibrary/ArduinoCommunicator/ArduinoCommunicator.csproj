@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Release\ArduinoCommunicator.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -44,6 +45,7 @@
     <Compile Include="Arduino.cs" />
     <Compile Include="DigitalValue.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="NamespaceDoc.cs" />
     <Compile Include="PinMode.cs" />
     <Compile Include="SerialCommunicator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

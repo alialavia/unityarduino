@@ -102,7 +102,7 @@
       <Name>ArduinoCommunicator</Name>
     </ProjectReference>
     <ProjectReference Include="..\ArduinoCommunicator\SerialPortNet\SerialPortNET.csproj">
-      <Project>{de7ed318-fdf5-4e93-85b6-552751c72ea5}</Project>
+      <Project>{DE7ED318-FDF5-4E93-85B6-552751C72EA5}</Project>
       <Name>SerialPortNET</Name>
     </ProjectReference>
   </ItemGroup>

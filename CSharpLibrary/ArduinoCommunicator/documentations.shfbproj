@@ -18,14 +18,31 @@
     <HtmlHelpName>Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <DocumentationSources>
-      <DocumentationSource sourceFile="CSharpLibrary\ArduinoCommunicator\bin\Debug\ArduinoCommunicator.dll" />
-<DocumentationSource sourceFile="CSharpLibrary\ArduinoCommunicator\bin\Debug\ArduinoCommunicator.xml" /></DocumentationSources>
+      <DocumentationSource sourceFile="bin\Release\ArduinoCommunicator.dll" />
+<DocumentationSource sourceFile="bin\Release\ArduinoCommunicator.xml" />
+<DocumentationSource sourceFile="SerialPortNet\bin\Release\SerialPortNET.dll" />
+<DocumentationSource sourceFile="SerialPortNet\bin\Release\SerialPortNET.xml" /></DocumentationSources>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
-    <HelpFileFormat>MSHelpViewer, Website</HelpFileFormat>
+    <HelpFileFormat>Website</HelpFileFormat>
     <IndentHtml>False</IndentHtml>
     <KeepLogFile>True</KeepLogFile>
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
     <CleanIntermediates>True</CleanIntermediates>
+    <HelpFileVersion>1.0.0.0</HelpFileVersion>
+    <MaximumGroupParts>2</MaximumGroupParts>
+    <NamespaceGrouping>False</NamespaceGrouping>
+    <SyntaxFilters>Standard</SyntaxFilters>
+    <SdkLinkTarget>Blank</SdkLinkTarget>
+    <RootNamespaceContainer>False</RootNamespaceContainer>
+    <PresentationStyle>VS2013</PresentationStyle>
+    <Preliminary>False</Preliminary>
+    <NamingMethod>Guid</NamingMethod>
+    <HelpTitle>ArduinoCommunicator and SerialPortNET Documentation</HelpTitle>
+    <ContentPlacement>AboveNamespaces</ContentPlacement>
+    <NamespaceSummaries>
+    </NamespaceSummaries>
+    <PlugInConfigurations>
+    </PlugInConfigurations>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->

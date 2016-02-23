@@ -88,11 +88,10 @@ namespace ArduinoCommunicator
         /// <summary>
         /// Writes to the analog pin.
         /// </summary>
-        /// <param name="pinNumber"></param>
-        /// <param name="value"></param>
+        /// <param name="pinNumber">Pin number.</param>
+        /// <param name="value">Analog value to write to.</param>
         public void analogWrite(int pinNumber, byte value)
         {
-
             sc.readCommand(SerialProtocol.Commands.ANALOG_WRITE, (byte)pinNumber, value);
         }
 
