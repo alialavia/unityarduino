@@ -60,7 +60,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>C:\Program Files (x86)\Microsoft\ILMerge\ILMerge.exe "$(TargetPath)" "$(TargetDir)SerialPortNET.dll" /out:"$(TargetDir)ArduinoCommunicatorSPNet.dll"
+    <PostBuildEvent>"C:\Program Files (x86)\Microsoft\ILMerge\ILMerge.exe" "$(TargetPath)" "$(TargetDir)SerialPortNET.dll" /out:"$(TargetDir)ArduinoCommunicatorSPNet.dll"
 
 copy "$(TargetDir)\ArduinoCommunicatorSPNet.dll" "C:\Users\alavis\Documents\ArduinoTest\Assets\" /Y</PostBuildEvent>
   </PropertyGroup>

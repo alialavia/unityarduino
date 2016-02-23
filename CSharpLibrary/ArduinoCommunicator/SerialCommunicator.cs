@@ -118,7 +118,6 @@ namespace ArduinoCommunicator
             try
             {
                 readCommand(SerialProtocol.Commands.DIGITAL_READ, 13);
-                //sendRequest(new byte[] { SerialProtocol.DIGITAL_READ, (byte)13, (byte)0 });
             }
             catch (Exception ex)
             {
