@@ -1,5 +1,5 @@
 # Unity<->Arduino
-A unity library for arduino connectivity
+A .Net library for Arduino/.Net connectivity, usable for Unity.
 
 
 # Quick start
