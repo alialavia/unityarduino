@@ -11,7 +11,6 @@ namespace ArduinoCommunicator
     public class Arduino
     {
         #region Public Constructors
-
         /// <summary>
         /// Creates a new instance of Arduino board with the specified board type and connects to it on the serialPort.
         /// </summary>

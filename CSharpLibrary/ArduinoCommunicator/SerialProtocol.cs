@@ -24,7 +24,7 @@ namespace ArduinoCommunicator
 
         public static bool IsValidMessage(byte[] rawData)
         {
-            return (SerialProtocol.CRC(rawData.SkipR(1)) == rawData[rawData.Length - 1]);
+            return (SerialProtocol.CRC(Helper.SkipR(rawData,1)) == rawData[rawData.Length - 1]);
         }
 
         #endregion Public Methods

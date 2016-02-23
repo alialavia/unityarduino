@@ -135,7 +135,7 @@ namespace ArduinoCommunicator
 
             // sanity check
             if (SerialProtocol.IsValidMessage(rawData))
-                return rawData.SkipR(1);
+                return Helper.SkipR(rawData, 1);
             else
                 throw new SerialCommunicatorUnhandledException("Bad CRC");
         }

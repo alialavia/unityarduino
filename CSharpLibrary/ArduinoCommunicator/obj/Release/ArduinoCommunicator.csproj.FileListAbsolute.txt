@@ -26,3 +26,6 @@ C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\obj\Release\Ardui
 C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\obj\Release\ArduinoCommunicator.pdb
 C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Release\ArduinoCommunicator.dll.CodeAnalysisLog.xml
 C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Release\ArduinoCommunicator.dll.lastcodeanalysissucceeded
+C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Release\SerialPortNET.dll
+C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Release\SerialPortNET.pdb
+C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Release\SerialPortNET.xml

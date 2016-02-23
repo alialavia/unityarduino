@@ -22,7 +22,7 @@ namespace WpfTest
             Timer t2 = new Timer(200);
             t2.Elapsed += T2_Elapsed;
             arduino1 = new Arduino(BoardType.UNO);
-            //arduino2 = new Arduino(BoardName.UNO);
+            arduino2 = new Arduino(BoardType.UNO);
 
             try
             {

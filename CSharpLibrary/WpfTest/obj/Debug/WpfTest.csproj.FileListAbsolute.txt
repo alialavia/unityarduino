@@ -31,3 +31,5 @@ C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Debug\WpfTest.g.resources
 C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Debug\WpfTest.Properties.Resources.resources
 C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\obj\Debug\WpfTest.csproj.GenerateResource.Cache
 C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\bin\Debug\ArduinoCommunicator.xml
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\bin\Debug\SerialPortNET.dll
+C:\Users\alavis\unityarduino\CSharpLibrary\WpfTest\bin\Debug\SerialPortNET.pdb

@@ -11,3 +11,5 @@ C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\obj\Debug\Arduino
 C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\obj\Debug\ArduinoCommunicator.pdb
 C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Debug\ArduinoCommunicator.XML
 C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\obj\Debug\ArduinoCommunicator.csprojResolveAssemblyReference.cache
+C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Debug\SerialPortNET.dll
+C:\Users\alavis\unityarduino\CSharpLibrary\ArduinoCommunicator\bin\Debug\SerialPortNET.pdb
