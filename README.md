@@ -1,4 +1,4 @@
-# unityarduino
+# Unity<->Arduino
 A unity library for arduino connectivity
 
 
