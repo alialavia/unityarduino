@@ -1,8 +1,0 @@
-d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\Test\bin\Debug\Test.exe.config
-d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\Test\bin\Debug\Test.exe
-d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\Test\bin\Debug\Test.pdb
-d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\Test\bin\Debug\ClassLibrary1.dll
-d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\Test\bin\Debug\ClassLibrary1.pdb
-d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
-d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\Test\obj\Debug\Test.exe
-d:\users\alavis\documents\visual studio 2015\Projects\ClassLibrary1\Test\obj\Debug\Test.pdb
