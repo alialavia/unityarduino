@@ -22,7 +22,7 @@ namespace WpfTest
             Timer t2 = new Timer(200);
             t2.Elapsed += T2_Elapsed;
             arduino1 = new Arduino(BoardType.UNO);
-            arduino2 = new Arduino(BoardType.UNO);
+            //arduino2 = new Arduino(BoardType.UNO);
 
             try
             {
@@ -62,7 +62,7 @@ namespace WpfTest
                 //{
                     v = arduino1.analogRead(0);
                     arduino1.analogWrite(5, (byte)(v / 4));
-                    arduino2.digitalWrite(13, !arduino2.digitalRead(13));
+                    //arduino2.digitalWrite(13, !arduino2.digitalRead(13));
                     success++;
                 //}
                 /*catch (IOException)
@@ -98,7 +98,8 @@ namespace WpfTest
 
         #region Private Fields
 
-        private Arduino arduino1, arduino2;
+        private Arduino arduino1;
+        //, arduino2;
 
         #endregion Private Fields
     }
