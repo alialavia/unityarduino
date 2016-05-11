@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ArduinoCommunicator</RootNamespace>
     <AssemblyName>ArduinoCommunicator</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -53,16 +53,15 @@
     <Compile Include="SerialProtocol.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SerialPortNet\SerialPortNET.csproj">
+    <ProjectReference Include="..\..\..\SerialPortNET\SerialPortNET.csproj">
       <Project>{de7ed318-fdf5-4e93-85b6-552751c72ea5}</Project>
       <Name>SerialPortNET</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Microsoft\ILMerge\ILMerge.exe" "$(TargetPath)" "$(TargetDir)SerialPortNET.dll" /out:"$(TargetDir)ArduinoCommunicatorSPNet.dll"
-
-copy "$(TargetDir)\ArduinoCommunicatorSPNet.dll" "C:\Users\alavis\Documents\ArduinoTest\Assets\" /Y</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

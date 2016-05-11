@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using SerialPortNET;
 
 namespace ArduinoCommunicator
@@ -8,7 +7,8 @@ namespace ArduinoCommunicator
     /// <summary>
     /// Holds state of the Arduino board
     /// </summary>
-    public class Arduino
+
+    public class Arduino<T> where T : class, ISerialPort, new()
     {
         #region Public Constructors
         /// <summary>
@@ -17,7 +17,7 @@ namespace ArduinoCommunicator
         /// <param name="board">Arduino board type</param>
         /// <param name="serialPort">Serial port to which the Arduino is connected</param>
         /// <exception cref="IOException">Throws IOException if connection fails.</exception>
-        public Arduino(BoardType board, SerialPort serialPort)
+        public Arduino(BoardType board, T serialPort)
         {
             this.SerialPort = serialPort;
             BoardType = new BoardInfo(board);
@@ -27,21 +27,21 @@ namespace ArduinoCommunicator
             {
                 if (this.SerialPort == null)
                 {
-                    sc = new SerialCommunicator();
-                    this.SerialPort = sc.SerialPort;
+                    sc = new SerialCommunicator<T>();
+                    this.SerialPort = sc.serialPort;
                 }
                 else
-                    sc = new SerialCommunicator(this.SerialPort);
+                    sc = new SerialCommunicator<T>(this.SerialPort);
             }
-            catch (IOException ex)
+            catch (IOException)
             {
                 if (serialPort == null)
                     throw new IOException("Cannot find an Arduino connected to this computer.");
                 else
                     throw new IOException("Cannot connect to Arduino on port " + serialPort.PortName);
-                
+
             }
-            
+
             IsConnected = true;
         }
 
@@ -50,7 +50,7 @@ namespace ArduinoCommunicator
         /// </summary>
         /// <param name="board">Arduino board name</param>
         /// <exception cref="IOException">Throws IOException if connection fails.</exception>
-        public Arduino(BoardType board = ArduinoCommunicator.BoardType.UNO) : this(board, null)
+        public Arduino(BoardType board = ArduinoCommunicator.BoardType.UNO) : this(board, (T)null)
         {
 
         }
@@ -86,7 +86,7 @@ namespace ArduinoCommunicator
                 throw new ArgumentOutOfRangeException(pinNumber.ToString(), ret.ToString());
             return ret;
         }
-        
+
         /// <summary>
         /// Writes to the analog pin.
         /// </summary>
@@ -103,7 +103,7 @@ namespace ArduinoCommunicator
         /// <param name="pinNumber">Pin number to read its digital value.</param>
         /// <returns>DigitalValue read on the pin.</returns>
         public DigitalValue digitalRead(int pinNumber)
-        {            
+        {
             return sc.readCommand(SerialProtocol.Commands.DIGITAL_READ, (byte)pinNumber);
         }
 
@@ -151,11 +151,11 @@ namespace ArduinoCommunicator
         /// True if instance is connected to Arduino board. False otherwise.
         /// </summary>
         public bool IsConnected { get; protected set; }
-        
+
         /// <summary>
         /// The serial port object that Arduino is connected to. Null if not connected.
         /// </summary>
-        public SerialPort SerialPort { get; private set; }
+        public T SerialPort { get; private set; }
 
 
         #endregion Public Properties
@@ -163,8 +163,29 @@ namespace ArduinoCommunicator
         #region Private Fields
 
         private int[] analogBuffer;
-        private SerialCommunicator sc;
+        private SerialCommunicator<T> sc;
 
         #endregion Private Fields
+    }
+
+    /// <summary>
+    /// Arduino class with a SerialPort object as its underlying communication class
+    /// </summary>
+    public class Arduino : Arduino<SerialPort>
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="board"></param>
+        public Arduino(BoardType board = ArduinoCommunicator.BoardType.UNO) : base(board) { }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="serialPort"></param>
+        public Arduino(BoardType board, SerialPort serialPort) : base(board, serialPort) { }
+
+
     }
 }

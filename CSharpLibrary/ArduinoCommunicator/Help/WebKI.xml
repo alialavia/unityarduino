@@ -27,6 +27,7 @@
   <HelpKINode Title="ArduinoCommunicator.DigitalValue class" Url="html/c7ecf726-6508-8808-a279-26bf9b9d0fc7.htm" />
   <HelpKINode Title="ArduinoCommunicator.PinMode enumeration" Url="html/fe3ba945-0f56-0d60-6c6f-4a8be183f453.htm" />
   <HelpKINode Title="BaudRate property">
+    <HelpKINode Title="ILowLevelSerialPort.BaudRate Property " Url="html/ab06e480-407c-9b3a-1b36-f98fb146db30.htm" />
     <HelpKINode Title="ISerialPort.BaudRate Property " Url="html/9b3051ce-2a6e-e516-9f21-d55ee1443eee.htm" />
     <HelpKINode Title="SerialPort.BaudRate Property " Url="html/8b41d0de-6ede-bab9-d38e-d0a44cafbdbe.htm" />
   </HelpKINode>
@@ -47,19 +48,24 @@
   <HelpKINode Title="BoardType property" Url="html/0242be16-a8b5-6b6a-02b4-49cf0dfb07ca.htm" />
   <HelpKINode Title="Boolean to DigitalValue conversion" Url="html/14d0d4f3-bd79-d100-16c4-74398da318c6.htm" />
   <HelpKINode Title="BytesToRead property">
+    <HelpKINode Title="ILowLevelSerialPort.BytesToRead Property " Url="html/3bc2c0ec-186a-7a9b-25b4-67859a4284c0.htm" />
     <HelpKINode Title="ISerialPort.BytesToRead Property " Url="html/c985acc7-7c17-0ff6-7637-4bc6154a3ca8.htm" />
     <HelpKINode Title="SerialPort.BytesToRead Property " Url="html/d2e8aaf0-ad8e-4789-9ca2-eb8841b5a73b.htm" />
   </HelpKINode>
   <HelpKINode Title="BytesToWrite property">
+    <HelpKINode Title="ILowLevelSerialPort.BytesToWrite Property " Url="html/36ad36bd-45ba-7902-d58c-2f71ea8f1c58.htm" />
     <HelpKINode Title="ISerialPort.BytesToWrite Property " Url="html/4787aac2-4038-0f2b-eecd-30333513530f.htm" />
     <HelpKINode Title="SerialPort.BytesToWrite Property " Url="html/a31445fe-0fda-ca6b-6fbf-0ef1c6e27cb3.htm" />
   </HelpKINode>
+  <HelpKINode Title="Chars enumeration member" Url="html/f961364f-9535-712c-3f71-f71bf7a420c4.htm" />
   <HelpKINode Title="Close method">
     <HelpKINode Title="Arduino.Close Method " Url="html/d3ddfb81-d072-226d-7963-af50e38ed854.htm" />
+    <HelpKINode Title="ILowLevelSerialPort.Close Method " Url="html/936ce124-ada8-f28d-55f6-629aa57b88fa.htm" />
     <HelpKINode Title="ISerialPort.Close Method " Url="html/3567c441-d721-f03d-6887-ec8865a166a0.htm" />
     <HelpKINode Title="SerialPort.Close Method " Url="html/1c433a60-2543-bdae-0d17-e4f64c217a27.htm" />
   </HelpKINode>
   <HelpKINode Title="DataBits property">
+    <HelpKINode Title="ILowLevelSerialPort.DataBits Property " Url="html/c132fc15-ceb0-1fbc-2ecf-a40f2a52f919.htm" />
     <HelpKINode Title="ISerialPort.DataBits Property " Url="html/25edbd99-dc11-78d8-18ba-4abdd04fe676.htm" />
     <HelpKINode Title="SerialPort.DataBits Property " Url="html/0d656e0e-496d-7f58-d7c1-d96b0cb6c71d.htm" />
   </HelpKINode>
@@ -87,8 +93,10 @@
     <HelpKINode Title="RtsControl Enumeration" Url="html/1fb71913-d9b9-29a6-e41a-de7ae5c436a9.htm" />
   </HelpKINode>
   <HelpKINode Title="Dispose method" Url="html/36978e79-454e-a4a2-ca17-9bd3e9f8fb18.htm" />
+  <HelpKINode Title="DisposeUnmanagedResources method" Url="html/6a292d7f-0a18-9d48-4c8a-54bf12493462.htm" />
   <HelpKINode Title="DtrControl enumeration" Url="html/1fe186ca-9eeb-d7a2-32c9-0eebb4a75de0.htm" />
   <HelpKINode Title="DtrControl property">
+    <HelpKINode Title="ILowLevelSerialPort.DtrControl Property " Url="html/7b12a97f-9043-8617-912e-583d54a2c4c0.htm" />
     <HelpKINode Title="ISerialPort.DtrControl Property " Url="html/6891e5cf-8e69-b2c3-7d7c-b09c10d37790.htm" />
     <HelpKINode Title="SerialPort.DtrControl Property " Url="html/1b44fc43-4d57-acaa-0638-3eac114f7cc8.htm" />
   </HelpKINode>
@@ -97,6 +105,7 @@
     <HelpKINode Title="RtsControl Enumeration" Url="html/1fb71913-d9b9-29a6-e41a-de7ae5c436a9.htm" />
   </HelpKINode>
   <HelpKINode Title="EnumerateSerialPorts method" Url="html/54b8c90a-8cbc-e505-6ef8-5270519e9078.htm" />
+  <HelpKINode Title="Eof enumeration member" Url="html/f961364f-9535-712c-3f71-f71bf7a420c4.htm" />
   <HelpKINode Title="Even enumeration member" Url="html/39537e59-2c48-464f-e3ec-05899a2bc179.htm" />
   <HelpKINode Title="EventType property" Url="html/3e5c41ce-f9aa-f861-7eb6-e763c2cf47f5.htm" />
   <HelpKINode Title="Handshake enumeration member">
@@ -104,6 +113,26 @@
     <HelpKINode Title="RtsControl Enumeration" Url="html/1fb71913-d9b9-29a6-e41a-de7ae5c436a9.htm" />
   </HelpKINode>
   <HelpKINode Title="High field" Url="html/dfc7588a-d29b-5759-a74c-bbf3d0f89fcf.htm" />
+  <HelpKINode Title="ILowLevelSerialPort interface">
+    <HelpKINode Title="ILowLevelSerialPort Interface" Url="html/3e5c4a7d-7b24-1702-91c7-bfe379733f15.htm" />
+    <HelpKINode Title="about ILowLevelSerialPort interface" Url="html/3e5c4a7d-7b24-1702-91c7-bfe379733f15.htm" />
+    <HelpKINode Title="methods" Url="html/4de7060d-06c6-338b-34ca-275f9b580d69.htm" />
+    <HelpKINode Title="properties" Url="html/57780fa3-c484-1cee-f3bf-8a4ae06efd71.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ILowLevelSerialPort.BaudRate property" Url="html/ab06e480-407c-9b3a-1b36-f98fb146db30.htm" />
+  <HelpKINode Title="ILowLevelSerialPort.BytesToRead property" Url="html/3bc2c0ec-186a-7a9b-25b4-67859a4284c0.htm" />
+  <HelpKINode Title="ILowLevelSerialPort.BytesToWrite property" Url="html/36ad36bd-45ba-7902-d58c-2f71ea8f1c58.htm" />
+  <HelpKINode Title="ILowLevelSerialPort.Close method" Url="html/936ce124-ada8-f28d-55f6-629aa57b88fa.htm" />
+  <HelpKINode Title="ILowLevelSerialPort.DataBits property" Url="html/c132fc15-ceb0-1fbc-2ecf-a40f2a52f919.htm" />
+  <HelpKINode Title="ILowLevelSerialPort.DisposeUnmanagedResources method" Url="html/6a292d7f-0a18-9d48-4c8a-54bf12493462.htm" />
+  <HelpKINode Title="ILowLevelSerialPort.DtrControl property" Url="html/7b12a97f-9043-8617-912e-583d54a2c4c0.htm" />
+  <HelpKINode Title="ILowLevelSerialPort.IsOpen property" Url="html/1a8617f0-db4b-7b6d-bc31-30a66b187bb2.htm" />
+  <HelpKINode Title="ILowLevelSerialPort.Open method" Url="html/d9bc2c5d-77d7-c40f-bf0b-c17b0f5b828b.htm" />
+  <HelpKINode Title="ILowLevelSerialPort.Parity property" Url="html/90176e1a-e820-2050-bd12-dfd552ece6de.htm" />
+  <HelpKINode Title="ILowLevelSerialPort.PortName property" Url="html/3b3a2455-8fc8-0da1-dd70-f584f57332d3.htm" />
+  <HelpKINode Title="ILowLevelSerialPort.Read method" Url="html/69405b33-ed4e-c21f-8927-67bb7f929374.htm" />
+  <HelpKINode Title="ILowLevelSerialPort.StopBits property" Url="html/a5f86837-f1f0-4f0f-4427-988f79edaf42.htm" />
+  <HelpKINode Title="ILowLevelSerialPort.Write method" Url="html/1fef708f-b788-34c6-ed5a-a417174b0c9a.htm" />
   <HelpKINode Title="INPUT enumeration member" Url="html/fe3ba945-0f56-0d60-6c6f-4a8be183f453.htm" />
   <HelpKINode Title="INPUT_PULLUP enumeration member" Url="html/fe3ba945-0f56-0d60-6c6f-4a8be183f453.htm" />
   <HelpKINode Title="Int32 to DigitalValue conversion" Url="html/7f0940a4-92a9-2410-df7c-85e5f2996011.htm" />
@@ -137,6 +166,7 @@
   <HelpKINode Title="ISerialPort.Write method" Url="html/fba2b017-9aca-4538-b267-152718457749.htm" />
   <HelpKINode Title="ISerialPort.WriteAll method" Url="html/b48dca1b-cf14-e940-5dfd-5b2d83e2ac07.htm" />
   <HelpKINode Title="IsOpen property">
+    <HelpKINode Title="ILowLevelSerialPort.IsOpen Property " Url="html/1a8617f0-db4b-7b6d-bc31-30a66b187bb2.htm" />
     <HelpKINode Title="ISerialPort.IsOpen Property " Url="html/bc8a593e-8d49-fc3d-5f16-0cb0b005cab8.htm" />
     <HelpKINode Title="SerialPort.IsOpen Property " Url="html/75275c8c-cb46-ff74-92bd-f0789ed37623.htm" />
   </HelpKINode>
@@ -154,22 +184,26 @@
   <HelpKINode Title="One enumeration member" Url="html/74432bb0-c44b-8a90-31b1-b1b6cb981f31.htm" />
   <HelpKINode Title="OnePointFive enumeration member" Url="html/74432bb0-c44b-8a90-31b1-b1b6cb981f31.htm" />
   <HelpKINode Title="Open method">
+    <HelpKINode Title="ILowLevelSerialPort.Open Method " Url="html/d9bc2c5d-77d7-c40f-bf0b-c17b0f5b828b.htm" />
     <HelpKINode Title="ISerialPort.Open Method " Url="html/4f238837-e6fd-9953-ed7a-8be64d27e563.htm" />
     <HelpKINode Title="SerialPort.Open Method " Url="html/2d1367cc-fb48-b912-b6b4-2a86d8559e71.htm" />
   </HelpKINode>
   <HelpKINode Title="OUTPUT enumeration member" Url="html/fe3ba945-0f56-0d60-6c6f-4a8be183f453.htm" />
   <HelpKINode Title="Parity enumeration" Url="html/39537e59-2c48-464f-e3ec-05899a2bc179.htm" />
   <HelpKINode Title="Parity property">
+    <HelpKINode Title="ILowLevelSerialPort.Parity Property " Url="html/90176e1a-e820-2050-bd12-dfd552ece6de.htm" />
     <HelpKINode Title="ISerialPort.Parity Property " Url="html/18f1d4d4-131a-aaba-7064-714978854ef6.htm" />
     <HelpKINode Title="SerialPort.Parity Property " Url="html/53a99418-039b-f6e2-3285-0810aca00437.htm" />
   </HelpKINode>
   <HelpKINode Title="PinMode enumeration" Url="html/fe3ba945-0f56-0d60-6c6f-4a8be183f453.htm" />
   <HelpKINode Title="pinMode method" Url="html/1913b907-00d7-5dfd-beb7-9334e3eeb138.htm" />
   <HelpKINode Title="PortName property">
+    <HelpKINode Title="ILowLevelSerialPort.PortName Property " Url="html/3b3a2455-8fc8-0da1-dd70-f584f57332d3.htm" />
     <HelpKINode Title="ISerialPort.PortName Property " Url="html/41444189-f532-ef32-a3bf-b08f054a9c69.htm" />
     <HelpKINode Title="SerialPort.PortName Property " Url="html/eaed8dd0-064f-5b91-c21a-ab91ad0ef20e.htm" />
   </HelpKINode>
   <HelpKINode Title="Read method">
+    <HelpKINode Title="ILowLevelSerialPort.Read Method " Url="html/69405b33-ed4e-c21f-8927-67bb7f929374.htm" />
     <HelpKINode Title="ISerialPort.Read Method " Url="html/8bb23840-8b36-db62-8507-ff3b583cf6ca.htm" />
     <HelpKINode Title="SerialPort.Read Method " Url="html/b976f4a3-dc23-b96f-7410-e5c8df8dd327.htm" />
   </HelpKINode>
@@ -186,6 +220,7 @@
     <HelpKINode Title="ISerialPort.RunAsync Method " Url="html/a06e84b8-ce89-6284-aa2e-4d4518d71e9e.htm" />
     <HelpKINode Title="SerialPort.RunAsync Method " Url="html/4f88db3b-5b0b-0e03-47f6-2d5d61a8afe7.htm" />
   </HelpKINode>
+  <HelpKINode Title="SerialData enumeration" Url="html/f961364f-9535-712c-3f71-f71bf7a420c4.htm" />
   <HelpKINode Title="SerialDataReceivedEventArgs class">
     <HelpKINode Title="SerialDataReceivedEventArgs Class" Url="html/13b34075-2655-fc0c-4292-a541bc011eac.htm" />
     <HelpKINode Title="about SerialDataReceivedEventArgs class" Url="html/13b34075-2655-fc0c-4292-a541bc011eac.htm" />
@@ -229,9 +264,11 @@
   <HelpKINode Title="SerialPort.WriteAll method" Url="html/3829629a-9287-edfe-5362-64465c7b169b.htm" />
   <HelpKINode Title="SerialPortNET namespace" Url="html/ce30ad11-a2b0-1d46-beba-b252990b83d8.htm" />
   <HelpKINode Title="SerialPortNET.DtrControl enumeration" Url="html/1fe186ca-9eeb-d7a2-32c9-0eebb4a75de0.htm" />
+  <HelpKINode Title="SerialPortNET.ILowLevelSerialPort interface" Url="html/3e5c4a7d-7b24-1702-91c7-bfe379733f15.htm" />
   <HelpKINode Title="SerialPortNET.ISerialPort interface" Url="html/ced5fc0f-03df-5cbd-68e8-4affc5c5f248.htm" />
   <HelpKINode Title="SerialPortNET.Parity enumeration" Url="html/39537e59-2c48-464f-e3ec-05899a2bc179.htm" />
   <HelpKINode Title="SerialPortNET.RtsControl enumeration" Url="html/1fb71913-d9b9-29a6-e41a-de7ae5c436a9.htm" />
+  <HelpKINode Title="SerialPortNET.SerialData enumeration" Url="html/f961364f-9535-712c-3f71-f71bf7a420c4.htm" />
   <HelpKINode Title="SerialPortNET.SerialDataReceivedEventArgs class" Url="html/13b34075-2655-fc0c-4292-a541bc011eac.htm" />
   <HelpKINode Title="SerialPortNET.SerialDataReceivedEventHandler delegate" Url="html/12884cec-e7c6-b806-dddf-1828958dd0b0.htm" />
   <HelpKINode Title="SerialPortNET.SerialPort class" Url="html/abea2f0a-b570-e744-be7a-3d84eb37a2d6.htm" />
@@ -243,6 +280,7 @@
   </HelpKINode>
   <HelpKINode Title="StopBits enumeration" Url="html/74432bb0-c44b-8a90-31b1-b1b6cb981f31.htm" />
   <HelpKINode Title="StopBits property">
+    <HelpKINode Title="ILowLevelSerialPort.StopBits Property " Url="html/a5f86837-f1f0-4f0f-4427-988f79edaf42.htm" />
     <HelpKINode Title="ISerialPort.StopBits Property " Url="html/b40640ec-588e-b449-a4ca-d1ee7230dee3.htm" />
     <HelpKINode Title="SerialPort.StopBits Property " Url="html/1b39d0cb-5c91-74bf-1740-a1e7aa18bb94.htm" />
   </HelpKINode>
@@ -251,6 +289,7 @@
   <HelpKINode Title="Two enumeration member" Url="html/74432bb0-c44b-8a90-31b1-b1b6cb981f31.htm" />
   <HelpKINode Title="UNO enumeration member" Url="html/9279626e-f4fe-10c0-7851-9e5e1ddc7865.htm" />
   <HelpKINode Title="Write method">
+    <HelpKINode Title="ILowLevelSerialPort.Write Method " Url="html/1fef708f-b788-34c6-ed5a-a417174b0c9a.htm" />
     <HelpKINode Title="ISerialPort.Write Method " Url="html/fba2b017-9aca-4538-b267-152718457749.htm" />
     <HelpKINode Title="SerialPort.Write Method " Url="html/1695adea-80a9-861c-9519-11290bbd24f2.htm" />
   </HelpKINode>

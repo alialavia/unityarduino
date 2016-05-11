@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfTest", "WpfTest\WpfTest.csproj", "{2D430E04-2EA6-48D6-879B-36D339A08F74}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoCommunicator", "ArduinoCommunicator\ArduinoCommunicator.csproj", "{DCA7E73F-6C15-42B9-95BB-8026AE75B008}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPortNET", "SerialPortNet\SerialPortNET.csproj", "{DE7ED318-FDF5-4E93-85B6-552751C72EA5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPortNET", "..\..\SerialPortNET\SerialPortNET.csproj", "{DE7ED318-FDF5-4E93-85B6-552751C72EA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitySerialPort", "UnitySerialPort\UnitySerialPort.csproj", "{1E168FBD-ABB5-49E0-9238-0B438D596055}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{DE7ED318-FDF5-4E93-85B6-552751C72EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE7ED318-FDF5-4E93-85B6-552751C72EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE7ED318-FDF5-4E93-85B6-552751C72EA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E168FBD-ABB5-49E0-9238-0B438D596055}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E168FBD-ABB5-49E0-9238-0B438D596055}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E168FBD-ABB5-49E0-9238-0B438D596055}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E168FBD-ABB5-49E0-9238-0B438D596055}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

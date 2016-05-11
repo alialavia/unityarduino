@@ -9,7 +9,7 @@ namespace ArduinoCommunicator
     /// <summary>
     /// Communicates with Arduino.
     /// </summary>
-    internal class SerialCommunicator
+    internal class SerialCommunicator<T> where T : class, ISerialPort, new()
     {
         #region Public Constructors
         // To support multiple connected Arduinos
@@ -18,18 +18,18 @@ namespace ArduinoCommunicator
         /// Manually select Arduino port settings. Use it for multiple boards, or if you have changed Arduino connection settings.
         /// </summary>
         /// <param name="sp">Serial port to connect to</param>
-        public SerialCommunicator(SerialPort sp)
+        public SerialCommunicator(T sp)
         {
-            SerialPort = sp;
+            serialPort = sp;
             try
             {
                 connect();
-                connectedPortNames.Add(SerialPort.PortName);
+                connectedPortNames.Add(serialPort.PortName);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                SerialPort = null;
+                serialPort = null;
             }
         }
 
@@ -49,23 +49,24 @@ namespace ArduinoCommunicator
 
             foreach (var portname in portnames)
             {
-                SerialPort = new SerialPort(portname, 115200, Parity.Even, 8, StopBits.Two);
+                serialPort = new T();
+                serialPort.PortName = portname;
                 try
                 {
                     connect();
                     break;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    SerialPort.Close();
-                    SerialPort = null;
+                    serialPort.Close();
+                    serialPort = null;
                 }
             }
 
-            if (SerialPort == null)
+            if (serialPort == null)
                 throw new IOException("No arduino board found.");
 
-            connectedPortNames.Add(SerialPort.PortName);
+            connectedPortNames.Add(serialPort.PortName);
         }
 
         #endregion Public Constructors
@@ -74,7 +75,7 @@ namespace ArduinoCommunicator
 
         public void Close()
         {
-            SerialPort.Close();
+            serialPort.Close();
         }
 
         public int readCommand(SerialProtocol.Commands command, byte pin, byte value = 0)
@@ -97,7 +98,7 @@ namespace ArduinoCommunicator
         public void sendMessage(byte[] message)
         {
             //Debug.Print(message[0])
-            SerialPort.WriteAll(SerialProtocol.AddCRC(message));
+            serialPort.WriteAll(SerialProtocol.AddCRC(message));
         }
 
         #endregion Public Methods
@@ -110,7 +111,7 @@ namespace ArduinoCommunicator
         /// <exception cref="IOException"></exception>
         private void connect()
         {
-            SerialPort.Open();                                 
+            serialPort.Open();                                 
             // Wait for arduino to get ready
             Thread.Sleep(2000);
             // Just to test it's connected to Arduino
@@ -118,7 +119,7 @@ namespace ArduinoCommunicator
             {
                 readCommand(SerialProtocol.Commands.DIGITAL_READ, 13);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new IOException("Cannot connect to Arduino using the given port. Make sure that Arduino is connected, serial port is not in use, and port settings and board name are selected correctly.");
             }
@@ -135,7 +136,7 @@ namespace ArduinoCommunicator
         private byte[] readMessage()
         {
             byte[] rawData = new byte[SerialProtocol.IN_BUFFER_LENGTH];
-            SerialPort.Read(rawData, 0, SerialProtocol.IN_BUFFER_LENGTH);
+            serialPort.Read(rawData, 0, SerialProtocol.IN_BUFFER_LENGTH);
 
             // sanity check
             if (SerialProtocol.IsValidMessage(rawData))
@@ -146,7 +147,7 @@ namespace ArduinoCommunicator
 
         private void sendACK()
         {
-            SerialPort.WriteAll(SerialProtocol.AddCRC(SerialProtocol.ACK));
+            serialPort.WriteAll(SerialProtocol.AddCRC(SerialProtocol.ACK));
             //serialPort.WriteAll(SerialProtocol.ACK);
         }
 
@@ -182,7 +183,7 @@ namespace ArduinoCommunicator
         private void waitForResponse()
         {
             var t = DateTime.Now;
-            while (SerialPort.BytesToRead < 4)
+            while (serialPort.BytesToRead < 4)
             {
                 if (DateTime.Now.Ticks - t.Ticks > serialTimeout)
                     throw new SerialCommunicatorUnhandledException("SerialCommunicator timeout reached.");
@@ -193,7 +194,7 @@ namespace ArduinoCommunicator
 
         #region Public Properties
 
-        public SerialPort SerialPort { get; private set; }
+        public T serialPort { get; private set; }
 
         #endregion Public Properties
 

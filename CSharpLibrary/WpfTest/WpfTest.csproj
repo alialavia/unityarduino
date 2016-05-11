@@ -97,13 +97,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\SerialPortNET\SerialPortNET.csproj">
+      <Project>{de7ed318-fdf5-4e93-85b6-552751c72ea5}</Project>
+      <Name>SerialPortNET</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ArduinoCommunicator\ArduinoCommunicator.csproj">
       <Project>{dca7e73f-6c15-42b9-95bb-8026ae75b008}</Project>
       <Name>ArduinoCommunicator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SerialPortNet\SerialPortNET.csproj">
-      <Project>{de7ed318-fdf5-4e93-85b6-552751c72ea5}</Project>
-      <Name>SerialPortNET</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
