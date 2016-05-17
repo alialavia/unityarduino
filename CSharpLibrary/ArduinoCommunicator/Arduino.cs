@@ -8,7 +8,7 @@ namespace ArduinoCommunicator
     /// Holds state of the Arduino board
     /// </summary>
 
-    public class Arduino<T> where T : class, ISerialPort, new()
+    public class Arduino<T> where T : AbstractSerialPort, new()
     {
         #region Public Constructors
         /// <summary>
@@ -33,7 +33,7 @@ namespace ArduinoCommunicator
                 else
                     sc = new SerialCommunicator<T>(this.SerialPort);
             }
-            catch (IOException)
+            catch (Exception)
             {
                 if (serialPort == null)
                     throw new IOException("Cannot find an Arduino connected to this computer.");

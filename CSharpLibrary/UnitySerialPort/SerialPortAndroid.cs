@@ -1,33 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 using SerialPortNET;
 using UnityEngine;
-
 namespace UnitySerialPort
 {
     internal class SerialPortAndroid : ILowLevelSerialPort
     {
         #region Public Constructors
-
-        public SerialPortAndroid()
+        int _baudRate;
+        Parity _parity;
+        byte _dataBits;
+        DtrControl _dtrControl;
+        StopBits _stopBits;
+        AndroidJavaClass activityClass;
+        /// <summary>
+        /// How long should I busy wait for USB access, in seconds? 0 for unlimited.
+        /// </summary>
+        public static int WaitForAccessTimeOut = 30;
+        public SerialPortAndroid(bool waitForAccess = true)
         {
-            using (AndroidJavaClass activityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+            IsOpen = false;
+            activityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            activityContext = activityClass.GetStatic<AndroidJavaObject>("currentActivity");
+            var t = DateTime.Now.Ticks;
+            if (waitForAccess)
             {
-                activityContext = activityClass.GetStatic<AndroidJavaObject>("currentActivity");
-                LowLevelPort = new AndroidJavaObject("com.example.alavis.lowlevelusbserial.LowLevelPort", activityContext);
-                LowLevelPort.Call("init");
-                serialPort = LowLevelPort.Get<AndroidJavaObject>("serialPort");
+                while (!AccessGranted)
+                {
+                    if (WaitForAccessTimeOut > 0 &&
+                        new TimeSpan(DateTime.Now.Ticks - t).TotalSeconds > WaitForAccessTimeOut
+                        )
+                        break;
+                };
+                // if it wasn't timed out
+                if (AccessGranted)
+                {
+                    serialPort = activityContext.Call<AndroidJavaObject>("getSerialPort");
+                    service = activityContext.Call<AndroidJavaObject>("getService");
+                }
+                else
+                    throw new TimeoutException("Access grant timed out!");
             }
         }
 
+        public bool AccessGranted { get { return activityContext.Call<bool>("isUSBAccessGranted"); } }
+        public SerialPortAndroid(String portName, int baudRate, Parity parity, byte dataBits, StopBits stopBits) : this()
+        {
+            // parameters
+            this._baudRate = baudRate;
+            this._parity = parity;
+            this._dataBits = dataBits;
+            this._stopBits = stopBits;
+            this._dtrControl = DtrControl.Enable; // Default
+        }
         #endregion Public Constructors
 
         #region Public Methods
 
         public void Close()
         {
-            serialPort.Call("syncClose");
-            isOpen = false;
+            serialPort.Call("close");
+            IsOpen = false;
         }
 
         // This code added to correctly implement the disposable pattern.
@@ -49,44 +84,50 @@ namespace UnitySerialPort
             switch (mode)
             {
                 case FlushMode.Input:
-                    inputBuffer.Clear();
+                    var temp = new byte[BytesToRead];
+                    Read(temp, 0, temp.Length);
                     break;
                 case FlushMode.Output:
                     outputBuffer.Clear();
                     break;
                 default:
-                    inputBuffer.Clear();
-                    outputBuffer.Clear();
+                    Flush(FlushMode.Input);
+                    Flush(FlushMode.Output);
                     break;
             }
         }
 
         public Dictionary<string, string> GetPortNames()
         {
-            throw new NotImplementedException();
+            var temp = new Dictionary<string, string>();
+            temp.Add(PortName, "USBSER");
+            return temp;
         }
 
         public void Open()
         {
-            isOpen = serialPort.Call<Boolean>("syncOpen");
+            IsOpen = serialPort.Call<Boolean>("open");
+            BaudRate = _baudRate;
+            Parity = _parity;
+            DataBits = _dataBits;
+            StopBits = _stopBits;
+            DtrControl = _dtrControl;
         }
 
         public void Read(byte[] buffer, int offset, int count)
         {
-            lock (inputBuffer)
-            {
-                refreshReadBuffer();
-                for (int i = 0; i < Math.Min(count, inputBuffer.Count); i++)
-                    buffer[i + offset] = inputBuffer.Dequeue();
-            }
+            var temp = service.Call<byte[]>("getInputBuffer");
+            for (int i = 0; i < temp.Length; i++)
+                buffer[i] = temp[i];
         }
 
         public void Write(byte[] buffer, int offset, int count)
         {
             lock (outputBuffer)
             {
-                for (int i = offset; i < count; i++)
-                    outputBuffer.Enqueue(buffer[i]);
+                serialPort.Call("write", buffer);
+                //TODO: Think about any outputBuffer and is it necessary?
+                outputBuffer.Clear();
             }
         }
 
@@ -118,13 +159,7 @@ namespace UnitySerialPort
 
         #region Private Methods
 
-        private void refreshReadBuffer()
-        {
-            byte[] temp = new byte[DEFAULT_READ_BUFFER_SIZE];
-            serialPort.Call("syncRead", temp, TIMEOUT);
-            foreach (byte b in temp)
-                this.inputBuffer.Enqueue(b);
-        }
+
 
         #endregion Private Methods
 
@@ -134,12 +169,13 @@ namespace UnitySerialPort
         {
             get
             {
-                return serialPort.Call<int>("getBaudRate");
+                return _baudRate;
             }
 
             set
             {
-                serialPort.Call("setBaudRate", value);
+                _baudRate = value;
+                serialPort.Call("setBaudRate", _baudRate);
             }
         }
 
@@ -147,8 +183,7 @@ namespace UnitySerialPort
         {
             get
             {
-                lock (inputBuffer)
-                    return inputBuffer.Count;
+                return service.Call<int>("numberOfBytes");
             }
         }
 
@@ -163,48 +198,36 @@ namespace UnitySerialPort
 
         public byte DataBits
         {
-            get
-            {
-                return (byte)serialPort.Call<int>("getDataBits");
-            }
-
+            get { return _dataBits; }
             set
             {
-                serialPort.Call("setDataBits", (int)value);
+                _dataBits = value;
+                serialPort.Call("setDataBits", (int)_dataBits);
             }
         }
 
         public DtrControl DtrControl
         {
-            get
-            {
-                return (DtrControl)serialPort.Call<int>("getFlowControl");
-            }
-
+            get { return _dtrControl; }
             set
             {
-                serialPort.Call("setFlowControl", (int)value);
+                _dtrControl = value;
+                serialPort.Call("setFlowControl", (int)_dtrControl);
             }
         }
 
         public bool IsOpen
         {
-            get
-            {
-                return isOpen;
-            }
+            get; protected set;
         }
 
         public Parity Parity
         {
-            get
-            {
-                return (Parity)serialPort.Call<int>("getParity");
-            }
-
+            get { return _parity; }
             set
             {
-                serialPort.Call("setParity", (int)value);
+                _parity = value;
+                serialPort.Call("setParity", (int)_parity);
             }
         }
 
@@ -212,7 +235,7 @@ namespace UnitySerialPort
         {
             get
             {
-                return LowLevelPort.Get<String>("getDeviceName");
+                return "USBSER";
             }
 
             set
@@ -220,17 +243,36 @@ namespace UnitySerialPort
 
             }
         }
+        private int convertFromStopBits(StopBits sb)
+        {
+            if (sb == StopBits.One)
+                return 1;
+            else if (sb == StopBits.Two)
+                return 2;
+            else
+                return 3;
 
+
+        }
+
+        private StopBits convertToStopBits(int sb)
+        {
+            if (sb == 1)
+                return StopBits.One;
+            else if (sb == 2)
+                return StopBits.Two;
+            else
+                return StopBits.OnePointFive;
+
+
+        }
         public StopBits StopBits
         {
-            get
-            {
-                return (StopBits)serialPort.Call<int>("getStopBits");
-            }
-
+            get { return _stopBits; }
             set
             {
-                serialPort.Call("setStopBits", (int)value);
+                _stopBits = value;
+                serialPort.Call("setStopBits", convertFromStopBits(_stopBits));
             }
         }
 
@@ -243,17 +285,15 @@ namespace UnitySerialPort
         private readonly int TIMEOUT = 200; // milliseconds
         private AndroidJavaObject activityContext;
         private bool disposedValue = false;
-        private Queue<byte> inputBuffer = new Queue<byte>();
-        private bool isOpen;
         // To detect redundant calls
-        private AndroidJavaObject LowLevelPort;
 
         private Queue<byte> outputBuffer = new Queue<byte>();
-        private AndroidJavaObject serialPort;
+        public AndroidJavaObject serialPort;
+        public AndroidJavaObject service;
 
         #endregion Private Fields
 
-        
-        
+
+
     }
 }

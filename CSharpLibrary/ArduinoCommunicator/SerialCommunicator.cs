@@ -9,7 +9,7 @@ namespace ArduinoCommunicator
     /// <summary>
     /// Communicates with Arduino.
     /// </summary>
-    internal class SerialCommunicator<T> where T : class, ISerialPort, new()
+    internal class SerialCommunicator<T> where T : AbstractSerialPort, new()
     {
         #region Public Constructors
         // To support multiple connected Arduinos
@@ -27,9 +27,10 @@ namespace ArduinoCommunicator
                 connectedPortNames.Add(serialPort.PortName);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 serialPort = null;
+                throw ex;
             }
         }
 
@@ -39,8 +40,8 @@ namespace ArduinoCommunicator
         public SerialCommunicator()
         {
             var portnames = new List<String>();
-
-            foreach (var devicename in SerialPort.EnumerateSerialPorts())
+            var tempPort = new T();
+            foreach (var devicename in tempPort.EnumerateSerialPorts())
                 if (devicename.Key.Contains(USBSerialDeviceName))
                     portnames.Add(devicename.Value);
 
@@ -111,7 +112,7 @@ namespace ArduinoCommunicator
         /// <exception cref="IOException"></exception>
         private void connect()
         {
-            serialPort.Open();                                 
+            serialPort.Open();
             // Wait for arduino to get ready
             Thread.Sleep(2000);
             // Just to test it's connected to Arduino

@@ -5,24 +5,18 @@ using SerialPortNET;
 
 namespace UnitySerialPort
 {
-    public class AndroidSerialPort : SerialPort, ISerialPort
+
+    public class AndroidSerialPort : AbstractSerialPort
     {
-        static AndroidSerialPort()
+        public AndroidSerialPort(string portName, int baudRate, Parity parity, byte dataBits, StopBits stopBits)
+            : base(portName, baudRate, parity, dataBits, stopBits,
+                      (UnityEngine.Application.platform == UnityEngine.RuntimePlatform.Android
+                      ? new SerialPortAndroid()
+                      : null)
+                  )
         {
-            PlatformSpecificImplementation = new HandleUnimplementedPlatforms(implementAndroid);
         }
+        public AndroidSerialPort() : this("COM1", 115200, Parity.Even, 8, StopBits.Two) { }
 
-        public AndroidSerialPort(string portName, int baudRate, Parity parity, byte dataBits, StopBits stopBits) : base(portName, baudRate, parity, dataBits, stopBits)
-        {
-        }
-        public AndroidSerialPort() : base() { }
-
-        private static ILowLevelSerialPort implementAndroid(Platform p)
-        {
-            if (p == Platform.Android)
-                return new SerialPortAndroid();
-            else
-                throw new NotImplementedException();
-        }
     }
 }

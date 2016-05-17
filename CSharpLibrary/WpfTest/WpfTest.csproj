@@ -105,6 +105,10 @@
       <Project>{dca7e73f-6c15-42b9-95bb-8026ae75b008}</Project>
       <Name>ArduinoCommunicator</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnitySerialPort\UnitySerialPort.csproj">
+      <Project>{1E168FBD-ABB5-49E0-9238-0B438D596055}</Project>
+      <Name>UnitySerialPort</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

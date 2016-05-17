@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Timers;
 using System.Windows;
 using ArduinoCommunicator;
+using SerialPortNET;
+using UnitySerialPort;
 
 namespace WpfTest
 {
@@ -16,12 +18,14 @@ namespace WpfTest
         public MainWindow()
         {
             InitializeComponent();
-
+           /* foreach (var k in AndroidSerialPort.EnumerateSerialPorts().Keys)
+                MessageBox.Show(k + ":" + AndroidSerialPort.EnumerateSerialPorts()[k]);
+            */
             Timer t = new Timer(50);
             t.Elapsed += T_Elapsed;
             Timer t2 = new Timer(200);
             t2.Elapsed += T2_Elapsed;
-            arduino1 = new Arduino(BoardType.UNO);
+            arduino1 = new Arduino<UnitySerialPort.AndroidSerialPort>(BoardType.UNO);
             //arduino2 = new Arduino(BoardType.UNO);
 
             try
@@ -30,15 +34,15 @@ namespace WpfTest
                 /*arduino.pinMode(12, PinMode.OUTPUT);
                 arduino.pinMode(7, PinMode.INPUT_PULLUP);*/
                 //arduino.pinMode(12, PinMode.OUTPUT);
-
+                var sp = new SerialPort("COM7", 9600, SerialPortNET.Parity.None, 8, SerialPortNET.StopBits.One);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
-            t.Start();
-            t2.Start();
+            //t.Start();
+            //t2.Start();
         }
 
         private void T2_Elapsed(object sender, ElapsedEventArgs e)
@@ -98,7 +102,7 @@ namespace WpfTest
 
         #region Private Fields
 
-        private Arduino arduino1;
+        private Arduino<UnitySerialPort.AndroidSerialPort> arduino1;
         //, arduino2;
 
         #endregion Private Fields
