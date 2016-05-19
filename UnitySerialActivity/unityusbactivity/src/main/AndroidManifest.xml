@@ -1,0 +1,21 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.alavis.unityusbactivity">
+
+    <application android:icon="@drawable/app_icon" android:label="@string/app_name">
+        <uses-feature android:name="android.hardware.usb.host"
+            android:required="true"/>
+        <activity android:name=".UnityUSBActivity"
+            android:label="@string/app_name"
+            android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name="com.example.alavis.unityusbactivity.UsbService"
+            android:enabled="true">
+        </service>
+    </application>
+
+</manifest>
